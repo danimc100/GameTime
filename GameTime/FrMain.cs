@@ -13,15 +13,19 @@ namespace GameTime
 {
     public partial class FrMain : Form
     {
-        private const string TIMESPAN_FORMAT = @"d"; // HH\:mm\:SS";
         private GameList gameList;
         public FrMain()
         {
             InitializeComponent();
             gameList = new GameList();
+            listView1.SetDoubleBuffered(true);
             UpdateProcess();
 
-            var t = new TimeSpan(7, 30, 0).Ticks;
+            //int sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
+            //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            //var list = System.Diagnostics.Process.GetProcesses().Where(p => p.SessionId == sessionId).ToList();
+
+            //var t = new TimeSpan(7, 30, 0).Ticks;
         }
 
         private void Form1_Load(object sender, EventArgs e)

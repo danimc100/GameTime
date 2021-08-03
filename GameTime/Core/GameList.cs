@@ -16,11 +16,14 @@ namespace GameTime.Core
 
         private List<GameState> _list;
         private List<GameState> _historic;
+        private int sessionId;
 
         public GameList()
         {
             _list = new List<GameState>();
             _historic = new List<GameState>();
+            sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
+
             LoadData();
         }
 
@@ -61,7 +64,11 @@ namespace GameTime.Core
 
         public List<string> GetProcessList()
         {
+            //System.Diagnostics.Process.GetProcesses()[0].StartInfo
+
             return System.Diagnostics.Process.GetProcesses()
+                .Where(p => p.SessionId == sessionId)
+                //.OrderBy(p => p.StartTime)
                 .Select(f => f.ProcessName)
                 .OrderBy(f => f)
                 .Distinct()

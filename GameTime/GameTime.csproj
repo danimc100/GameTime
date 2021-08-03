@@ -88,6 +88,7 @@
     <Compile Include="Core\Dialogs.cs" />
     <Compile Include="Core\GameList.cs" />
     <Compile Include="Core\GameState.cs" />
+    <Compile Include="Core\ListViewExtension.cs" />
     <Compile Include="FrMain.cs">
       <SubType>Form</SubType>
     </Compile>
