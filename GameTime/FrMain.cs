@@ -152,5 +152,10 @@ namespace GameTime
         {
             this.TopMost = checkBox1.Checked;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            gameList.SaveDate();
+        }
     }
 }

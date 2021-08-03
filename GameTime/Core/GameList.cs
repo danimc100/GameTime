@@ -12,12 +12,15 @@ namespace GameTime.Core
     public class GameList
     {
         private const string FILE_NAME = "GameList.data";
+        private const string FILE_NAME_HISTORIC = "GameListHistoric.dataa";
 
         private List<GameState> _list;
+        private List<GameState> _historic;
 
         public GameList()
         {
             _list = new List<GameState>();
+            _historic = new List<GameState>();
             LoadData();
         }
 
@@ -26,6 +29,14 @@ namespace GameTime.Core
             get
             {
                 return _list;
+            }
+        }
+
+        public List<GameState> Historic
+        {
+            get
+            {
+                return _historic;
             }
         }
 
@@ -66,16 +77,33 @@ namespace GameTime.Core
                 stream.WriteLine(data);
                 stream.Close();
             }
+
+            if(Historic.Count > 0)
+            {
+                var stream = File.CreateText(FILE_NAME_HISTORIC);
+                string data = System.Text.Json.JsonSerializer.Serialize(Historic);
+                stream.WriteLine(data);
+                stream.Close();
+            }
         }
 
         public void LoadData()
         {
-            if (System.IO.File.Exists(FILE_NAME))
+            if (File.Exists(FILE_NAME))
             {
                 var data = File.ReadAllText(FILE_NAME);
                 if (!string.IsNullOrWhiteSpace(data))
                 {
                     _list = JsonSerializer.Deserialize<List<GameState>>(data);
+                }
+            }
+
+            if(File.Exists(FILE_NAME_HISTORIC))
+            {
+                var data = File.ReadAllText(FILE_NAME_HISTORIC);
+                if(!string.IsNullOrWhiteSpace(data))
+                {
+                    _historic = JsonSerializer.Deserialize<List<GameState>>(data);
                 }
             }
         }
