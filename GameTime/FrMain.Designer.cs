@@ -37,12 +37,13 @@ namespace GameTime
             this.columnTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnPartialTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnTotalTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button2 = new System.Windows.Forms.Button();
+            this.columnActive = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuListView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editarTítuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eliminarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.columnActive = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button2 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.contextMenuListView.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,21 +106,9 @@ namespace GameTime
             this.columnTotalTime.Text = "Tiempo total";
             this.columnTotalTime.Width = 100;
             // 
-            // timer1
+            // columnActive
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(471, 22);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(124, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Actualiza procesos";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.columnActive.Text = "Activo";
             // 
             // contextMenuListView
             // 
@@ -144,15 +133,41 @@ namespace GameTime
             this.eliminarToolStripMenuItem.Text = "&Eliminar";
             this.eliminarToolStripMenuItem.Click += new System.EventHandler(this.eliminarToolStripMenuItem_Click);
             // 
-            // columnActive
+            // timer1
             // 
-            this.columnActive.Text = "Activo";
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(471, 22);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(124, 23);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Actualiza procesos";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(601, 24);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(96, 17);
+            this.checkBox1.TabIndex = 5;
+            this.checkBox1.Text = "Siempre visible";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // FrMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 399);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.button1);
@@ -161,10 +176,12 @@ namespace GameTime
             this.MaximizeBox = false;
             this.Name = "FrMain";
             this.Text = "GameList";
+            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.contextMenuListView.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -183,6 +200,7 @@ namespace GameTime
         private System.Windows.Forms.ToolStripMenuItem editarTítuloToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem eliminarToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader columnActive;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

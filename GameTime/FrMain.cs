@@ -147,5 +147,10 @@ namespace GameTime
                 }
             }
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            this.TopMost = checkBox1.Checked;
+        }
     }
 }
