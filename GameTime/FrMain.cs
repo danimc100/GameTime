@@ -14,6 +14,7 @@ namespace GameTime
     public partial class FrMain : Form
     {
         private GameList gameList;
+
         public FrMain()
         {
             InitializeComponent();
@@ -36,21 +37,25 @@ namespace GameTime
         {
             if (comboBox1.SelectedItem != null)
             {
-                var game = new GameState(comboBox1.SelectedItem.ToString());
-                gameList.List.Add(game);
+                gameList.Add(comboBox1.SelectedItem.ToString());
                 UpdateView();
             }
         }
 
-        private void UpdateView()
+        private void UpdateView(bool refreshAllA = false)
         {
+            if (refreshAllA)
+            {
+                listView1.Items.Clear();
+            }
+
             foreach (var game in gameList.List)
             {
                 var items = listView1.Items.Find(game.Name, false);
                 if (items.Length > 0)
                 {
                     listView1.BeginUpdate();
-                    if(game.Active)
+                    if (game.Active)
                     {
                         items[0].SubItems[2].Text = game.PartialTime.ToString();
                         items[0].SubItems[3].Text = TimeFormat(game.TotalTime);
@@ -107,6 +112,8 @@ namespace GameTime
                 t.Seconds);
         }
 
+        #region Events
+
         private void button2_Click(object sender, EventArgs e)
         {
             UpdateProcess();
@@ -146,8 +153,7 @@ namespace GameTime
                 if (dialogResult == DialogResult.Yes)
                 {
                     listView1.Items.Remove(item);
-                    var gameItem = gameList.List.First(i => i.Name == name);
-                    gameList.List.Remove(gameItem);
+                    gameList.Delete(name);
                 }
             }
         }
@@ -161,5 +167,32 @@ namespace GameTime
         {
             gameList.SaveDate();
         }
+
+        private void borrarTiemposToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var name = listView1.SelectedItems[0].Name;
+                var gameItem = gameList.Get(name);
+                if (gameItem != null)
+                {
+                    gameItem.PartialTime = new TimeSpan(0);
+                    gameItem.TotalTime = new TimeSpan(0);
+                    UpdateView(true);
+                }
+            }
+        }
+
+        private void guardarEnHistóricoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(listView1.SelectedItems.Count > 0)
+            {
+                string name = listView1.SelectedItems[0].Name;
+                gameList.Historify(name);
+                UpdateView(true);
+            }
+        }
+
+        #endregion
     }
 }

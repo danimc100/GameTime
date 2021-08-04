@@ -64,15 +64,47 @@ namespace GameTime.Core
 
         public List<string> GetProcessList()
         {
-            //System.Diagnostics.Process.GetProcesses()[0].StartInfo
-
             return System.Diagnostics.Process.GetProcesses()
                 .Where(p => p.SessionId == sessionId)
-                //.OrderBy(p => p.StartTime)
                 .Select(f => f.ProcessName)
                 .OrderBy(f => f)
                 .Distinct()
                 .ToList();
+        }
+
+        public bool Exists(string name)
+        {
+            return List.Where(i => i.Name == name).Any();
+        }
+
+        public void Add(string name)
+        {
+            List.Add(new GameState(name));
+        }
+
+        public GameState Get(string name)
+        {
+            return List.Where(i => i.Name == name).FirstOrDefault();
+        }
+
+        public void Historify(string name)
+        {
+            var item = Get(name);
+            if (item != null)
+            {
+                Delete(name);
+                item.Active = false;
+                _historic.Add(item);
+            }
+        }
+
+        public void Delete(string name)
+        {
+            var item = Get(name);
+            if(item != null)
+            {
+                List.Remove(item);
+            }
         }
 
         public void SaveDate()
