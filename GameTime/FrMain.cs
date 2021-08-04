@@ -13,6 +13,7 @@ namespace GameTime
 {
     public partial class FrMain : Form
     {
+        private const int TIMER_INTERVAL = 1000;
         private GameList gameList;
 
         public FrMain()
@@ -20,6 +21,7 @@ namespace GameTime
             InitializeComponent();
             gameList = new GameList();
             listView1.SetDoubleBuffered(true);
+            timer1.Interval = TIMER_INTERVAL;
             UpdateProcess();
 
             //int sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
