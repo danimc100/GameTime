@@ -12,7 +12,7 @@ namespace GameTime.Core
     public class GameList
     {
         private const string FILE_NAME = "GameList.data";
-        private const string FILE_NAME_HISTORIC = "GameListHistoric.dataa";
+        private const string FILE_NAME_HISTORIC = "GameListHistoric.data";
 
         private List<GameState> _list;
         private List<GameState> _historic;
