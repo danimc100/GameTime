@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SharpDX.XInput;
 using GameTime.Core;
 
 namespace GameTime
@@ -14,6 +15,7 @@ namespace GameTime
     public partial class FrMain : Form
     {
         private const int TIMER_INTERVAL = 1000;
+        private Controller controller;
         private GameList gameList;
 
         public FrMain()
@@ -23,6 +25,8 @@ namespace GameTime
             listView1.SetDoubleBuffered(true);
             timer1.Interval = TIMER_INTERVAL;
             UpdateProcess();
+
+            controller = new Controller(UserIndex.One);
 
             //int sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
             //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -87,6 +91,26 @@ namespace GameTime
             comboBox1.Items.Clear();
             comboBox1.Items.AddRange(pList.ToArray());
         }
+
+        private void UpdateController()
+        {
+            if(controller.IsConnected)
+            {
+                label2.Text = "Conectado";
+                BatteryInformation bi = controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
+                progressBar1.Value = (int)bi.BatteryLevel;
+                label3.Text = string.Format("{0} - {1}",
+                        Enum.GetName(typeof(BatteryLevel), bi.BatteryLevel),
+                        Enum.GetName(typeof(BatteryType), bi.BatteryType)
+                        );
+            }
+            else
+            {
+                label2.Text = "Desconectado";
+                label3.Text = "Desconocido";
+            }
+
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             AddProcess();
@@ -97,6 +121,7 @@ namespace GameTime
             var elapsed = new TimeSpan(0, 0, 0, 0, timer1.Interval);
             gameList.CheckGames(elapsed);
             UpdateView();
+            UpdateController();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
