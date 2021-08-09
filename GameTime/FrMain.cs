@@ -17,6 +17,7 @@ namespace GameTime
         private const int TIMER_INTERVAL = 1000;
         private Controller controller;
         private GameList gameList;
+        private FrHistoric frHistoric;
 
         public FrMain()
         {
@@ -27,6 +28,8 @@ namespace GameTime
             UpdateProcess();
 
             controller = new Controller(UserIndex.One);
+
+            frHistoric = null;
 
             //int sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
             //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -48,9 +51,9 @@ namespace GameTime
             }
         }
 
-        private void UpdateView(bool refreshAllA = false)
+        private void UpdateView(bool refreshAll = false)
         {
-            if (refreshAllA)
+            if (refreshAll)
             {
                 listView1.Items.Clear();
             }
@@ -64,7 +67,7 @@ namespace GameTime
                     if (game.Active)
                     {
                         items[0].SubItems[2].Text = game.PartialTime.ToString();
-                        items[0].SubItems[3].Text = TimeFormat(game.TotalTime);
+                        items[0].SubItems[3].Text = Utils.TimeFormat(game.TotalTime);
                         items[0].SubItems[4].Text = "Si";
                     }
                     else
@@ -79,7 +82,7 @@ namespace GameTime
                     item.Name = game.Name;
                     item.SubItems.Add(game.Title);
                     item.SubItems.Add(game.PartialTime.ToString());
-                    item.SubItems.Add(TimeFormat(game.TotalTime));
+                    item.SubItems.Add(Utils.TimeFormat(game.TotalTime));
                     item.SubItems.Add(string.Empty);
                 }
             }
@@ -111,6 +114,17 @@ namespace GameTime
             }
 
         }
+
+        private void ShowHistoric()
+        {
+            if(frHistoric == null)
+            {
+                frHistoric = new FrHistoric();
+                frHistoric.GameList = gameList;
+            }
+
+            frHistoric.Show();
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             AddProcess();
@@ -127,16 +141,6 @@ namespace GameTime
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             gameList.SaveDate();
-        }
-
-        private string TimeFormat(TimeSpan t)
-        {
-            return string.Format(
-                "Días {0} - {1}:{2}:{3}",
-                t.Days,
-                t.Hours,
-                t.Minutes,
-                t.Seconds);
         }
 
         #region Events
@@ -221,5 +225,10 @@ namespace GameTime
         }
 
         #endregion
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ShowHistoric();
+        }
     }
 }

@@ -51,9 +51,9 @@ namespace GameTime
             this.button4 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.contextMenuListView.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -213,6 +213,7 @@ namespace GameTime
             this.button4.TabIndex = 7;
             this.button4.Text = "Ver &histórico";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label1
             // 
@@ -235,13 +236,14 @@ namespace GameTime
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Controlador";
             // 
-            // progressBar1
+            // label3
             // 
-            this.progressBar1.Location = new System.Drawing.Point(6, 43);
-            this.progressBar1.Maximum = 3;
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(290, 23);
-            this.progressBar1.TabIndex = 0;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(302, 43);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(13, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "?";
             // 
             // label2
             // 
@@ -252,14 +254,13 @@ namespace GameTime
             this.label2.TabIndex = 1;
             this.label2.Text = "Estado:";
             // 
-            // label3
+            // progressBar1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(302, 43);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(13, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "?";
+            this.progressBar1.Location = new System.Drawing.Point(6, 43);
+            this.progressBar1.Maximum = 3;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(290, 23);
+            this.progressBar1.TabIndex = 0;
             // 
             // FrMain
             // 

@@ -87,6 +87,11 @@ namespace GameTime.Core
             return List.Where(i => i.Name == name).FirstOrDefault();
         }
 
+        public GameState GetHistoric(string name)
+        {
+            return Historic.Where(i => i.Name == name).FirstOrDefault();
+        }
+
         public void Historify(string name)
         {
             var item = Get(name);
@@ -104,6 +109,15 @@ namespace GameTime.Core
             if(item != null)
             {
                 List.Remove(item);
+            }
+        }
+
+        public void DeleteHistoric(string name)
+        {
+            var item = GetHistoric(name);
+            if (item != null)
+            {
+                Historic.Remove(item);
             }
         }
 

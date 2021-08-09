@@ -18,6 +18,7 @@ namespace GameTime.Core
             Button buttonOk = new Button();
             Button buttonCancel = new Button();
 
+            form.TopMost = true;
             form.Text = title;
             label.Text = promptText;
             textBox.Text = value;
