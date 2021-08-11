@@ -18,6 +18,7 @@ namespace GameTime
         private Controller controller;
         private GameList gameList;
         private FrHistoric frHistoric;
+        private FrTime frTime;
 
         public FrMain()
         {
@@ -30,6 +31,7 @@ namespace GameTime
             controller = new Controller(UserIndex.One);
 
             frHistoric = null;
+            frTime = null;
 
             //int sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
             //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -125,6 +127,25 @@ namespace GameTime
 
             frHistoric.Show();
         }
+
+        private TimeSpan? ShowFrTime(TimeSpan time)
+        {
+            if(frTime == null)
+            {
+                frTime = new FrTime();
+            }
+
+            frTime.Time = time;
+            if( frTime.ShowDialog() == DialogResult.OK)
+            {
+                return frTime.Time;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             AddProcess();
@@ -229,6 +250,21 @@ namespace GameTime
         private void button4_Click(object sender, EventArgs e)
         {
             ShowHistoric();
+        }
+
+        private void cambiarTiempoTotalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(listView1.SelectedItems.Count > 0)
+            {
+                int index = listView1.SelectedItems[0].Index;
+                TimeSpan time = gameList.List[index].TotalTime;
+                TimeSpan? resultTime = ShowFrTime(time);
+                if(resultTime.HasValue)
+                {
+                    gameList.List[index].TotalTime = resultTime.Value;
+                    UpdateView(true);
+                }
+            }
         }
     }
 }
