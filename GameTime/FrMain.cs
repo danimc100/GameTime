@@ -266,5 +266,10 @@ namespace GameTime
                 }
             }
         }
+
+        private void contextMenuListView_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
     }
 }
