@@ -19,6 +19,7 @@ namespace GameTime
         private GameList gameList;
         private FrHistoric frHistoric;
         private FrTime frTime;
+        private bool timeChanged;
 
         public FrMain()
         {
@@ -32,16 +33,12 @@ namespace GameTime
 
             frHistoric = null;
             frTime = null;
+            timeChanged = false;
 
             //int sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
             //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             //var list = System.Diagnostics.Process.GetProcesses().Where(p => p.SessionId == sessionId).ToList();
-
             //var t = new TimeSpan(7, 30, 0).Ticks;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
         }
 
         private void AddProcess()
@@ -71,6 +68,7 @@ namespace GameTime
                         items[0].SubItems[2].Text = game.PartialTime.ToString();
                         items[0].SubItems[3].Text = Utils.TimeFormat(game.TotalTime);
                         items[0].SubItems[4].Text = "Si";
+                        TimeChanged(true);
                     }
                     else
                     {
@@ -146,6 +144,19 @@ namespace GameTime
             }
         }
 
+        private void TimeChanged(bool state)
+        {
+            timeChanged = state;
+            if(state)
+            {
+                button3.BackColor = Color.Orange;
+            }
+            else
+            {
+                button3.BackColor = SystemColors.Control;
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             AddProcess();
@@ -218,6 +229,7 @@ namespace GameTime
         private void button3_Click(object sender, EventArgs e)
         {
             gameList.SaveDate();
+            TimeChanged(false);
         }
 
         private void borrarTiemposToolStripMenuItem_Click(object sender, EventArgs e)
@@ -265,11 +277,6 @@ namespace GameTime
                     UpdateView(true);
                 }
             }
-        }
-
-        private void contextMenuListView_Opening(object sender, CancelEventArgs e)
-        {
-
         }
     }
 }
