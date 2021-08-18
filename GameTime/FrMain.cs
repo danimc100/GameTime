@@ -198,6 +198,7 @@ namespace GameTime
                         if (item.Name == name)
                         {
                             item.Title = title;
+                            TimeChanged(true);
                         }
                     });
                 }
@@ -217,6 +218,7 @@ namespace GameTime
                 {
                     listView1.Items.Remove(item);
                     gameList.Delete(name);
+                    TimeChanged(true);
                 }
             }
         }
@@ -243,6 +245,7 @@ namespace GameTime
                     gameItem.PartialTime = new TimeSpan(0);
                     gameItem.TotalTime = new TimeSpan(0);
                     UpdateView(true);
+                    TimeChanged(true);
                 }
             }
         }
@@ -275,6 +278,7 @@ namespace GameTime
                 {
                     gameList.List[index].TotalTime = resultTime.Value;
                     UpdateView(true);
+                    TimeChanged(true);
                 }
             }
         }
