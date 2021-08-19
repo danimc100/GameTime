@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 
 namespace GameTime.Core
 {
@@ -17,11 +18,13 @@ namespace GameTime.Core
         private List<GameState> _list;
         private List<GameState> _historic;
         private int sessionId;
+        private List<ProcessItem> currentProcessLst;
 
         public GameList()
         {
             _list = new List<GameState>();
             _historic = new List<GameState>();
+            currentProcessLst = new List<ProcessItem>();
             sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
 
             LoadData();
@@ -62,14 +65,40 @@ namespace GameTime.Core
             }
         }
 
-        public List<string> GetProcessList()
+        public List<string> GetProcessList(bool newFirst = false)
         {
-            return System.Diagnostics.Process.GetProcesses()
-                .Where(p => p.SessionId == sessionId)
-                .Select(f => f.ProcessName)
-                .OrderBy(f => f)
-                .Distinct()
-                .ToList();
+            if(newFirst)
+            {
+                var pList = Process.GetProcesses().ToList();
+
+                foreach (Process p in pList)
+                {
+                    if (!currentProcessLst.Exists(cpl => cpl.Name == p.ProcessName))
+                    {
+                        currentProcessLst.Add(new ProcessItem(p.ProcessName));
+                    }
+                }
+
+                currentProcessLst = (from cuLst in currentProcessLst
+                                     join p in pList on cuLst.Name equals p.ProcessName
+                                     select cuLst).ToList();
+
+                return currentProcessLst
+                    .OrderByDescending(c => c.Inserted)
+                    .ThenBy(c => c.Name)
+                    .Select(c => c.Name)
+                    .Distinct()
+                    .ToList<string>();
+            }
+            else
+            {
+                return System.Diagnostics.Process.GetProcesses()
+                    .Where(p => p.SessionId == sessionId)
+                    .Select(f => f.ProcessName)
+                    .OrderBy(f => f)
+                    .Distinct()
+                    .ToList();
+            }
         }
 
         public bool Exists(string name)

@@ -95,6 +95,7 @@
     <Compile Include="Core\GameList.cs" />
     <Compile Include="Core\GameState.cs" />
     <Compile Include="Core\ListViewExtension.cs" />
+    <Compile Include="Core\ProcessItem.cs" />
     <Compile Include="Core\Utils.cs" />
     <Compile Include="FrHistoric.cs">
       <SubType>Form</SubType>

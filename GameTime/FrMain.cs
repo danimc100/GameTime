@@ -90,7 +90,7 @@ namespace GameTime
 
         private void UpdateProcess()
         {
-            var pList = gameList.GetProcessList();
+            var pList = gameList.GetProcessList(true);
             comboBox1.Items.Clear();
             comboBox1.Items.AddRange(pList.ToArray());
         }
