@@ -41,16 +41,34 @@ namespace GameTime
                 );
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Accept()
         {
             this.DialogResult = DialogResult.OK;
             this.Hide();
+
+        }
+
+        private void CloseForm()
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Hide();
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Accept();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Hide();
+            CloseForm();
+        }
+
+        private void FrTime_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            CloseForm();
         }
     }
 }

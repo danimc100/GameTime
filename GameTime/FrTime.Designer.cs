@@ -85,9 +85,12 @@ namespace GameTime
             this.Controls.Add(this.maskedTextBox1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrTime";
             this.Text = "Cambiar tiempo";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrTime_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -77,5 +77,11 @@ namespace GameTime
                 UpdateView();
             }
         }
+
+        private void FrHistoric_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
     }
 }
