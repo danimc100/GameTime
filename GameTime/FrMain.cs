@@ -257,6 +257,7 @@ namespace GameTime
                 string name = listView1.SelectedItems[0].Name;
                 gameList.Historify(name);
                 UpdateView(true);
+                TimeChanged(true);
             }
         }
 
