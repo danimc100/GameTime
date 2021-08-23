@@ -46,6 +46,7 @@ namespace GameTime
                     item.Name = game.Name;
                     item.SubItems.Add(game.Title);
                     item.SubItems.Add(Utils.TimeFormat(game.TotalTime));
+                    item.SubItems.Add(game.Created.ToShortDateString());
                 }
             }
         }

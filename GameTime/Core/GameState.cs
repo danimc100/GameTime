@@ -12,6 +12,7 @@ namespace GameTime.Core
         public GameState()
         {
         }
+
         public GameState(string name)
         {
             Name = name;
@@ -19,6 +20,7 @@ namespace GameTime.Core
             PartialTime = new TimeSpan(0);
             TotalTime = new TimeSpan(0);
             Active = false;
+            Created = DateTime.Now;
         }
 
         public string Name { get; set; }
@@ -43,5 +45,7 @@ namespace GameTime.Core
         }
 
         public bool Active { get; set; }
+
+        public DateTime Created { get; set; }
     }
 }
