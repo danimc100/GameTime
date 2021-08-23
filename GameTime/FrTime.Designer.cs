@@ -90,7 +90,6 @@ namespace GameTime
             this.Name = "FrTime";
             this.Text = "Cambiar tiempo";
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrTime_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

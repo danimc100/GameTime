@@ -44,15 +44,13 @@ namespace GameTime
         private void Accept()
         {
             this.DialogResult = DialogResult.OK;
-            this.Hide();
-
+            Close();
         }
 
         private void CloseForm()
         {
             this.DialogResult = DialogResult.Cancel;
-            this.Hide();
-
+            Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -67,8 +65,6 @@ namespace GameTime
 
         private void FrTime_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            CloseForm();
         }
     }
 }

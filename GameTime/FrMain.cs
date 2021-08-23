@@ -134,9 +134,14 @@ namespace GameTime
             }
 
             frTime.Time = time;
-            if( frTime.ShowDialog() == DialogResult.OK)
+            DialogResult result = frTime.ShowDialog();
+            TimeSpan timeSpan = frTime.Time;
+            frTime.Dispose();
+            frTime = null;
+
+            if (result == DialogResult.OK)
             {
-                return frTime.Time;
+                return timeSpan;
             }
             else
             {
