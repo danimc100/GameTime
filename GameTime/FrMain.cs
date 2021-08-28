@@ -35,6 +35,8 @@ namespace GameTime
             frTime = null;
             timeChanged = false;
 
+            //this.ShowInTaskbar = false;
+
             //int sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
             //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             //var list = System.Diagnostics.Process.GetProcesses().Where(p => p.SessionId == sessionId).ToList();
@@ -287,6 +289,22 @@ namespace GameTime
                     TimeChanged(true);
                 }
             }
+        }
+
+        private void FrMain_Resize(object sender, EventArgs e)
+        {
+            if( WindowState == FormWindowState.Minimized )
+            {
+                Hide();
+                ShowInTaskbar = false;
+            }
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            ShowInTaskbar = true;
+            WindowState = FormWindowState.Normal;
         }
     }
 }
