@@ -178,6 +178,17 @@ namespace GameTime
             ShowInTaskbar = true;
         }
 
+        private void SaveWindowState()
+        {
+            Properties.Settings.Default.Location = Location;
+            Properties.Settings.Default.Save();
+        }
+
+        private void SetWindowState()
+        {
+            Location = Properties.Settings.Default.Location;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             AddProcess();
@@ -253,6 +264,7 @@ namespace GameTime
         {
             gameList.SaveDate();
             TimeChanged(false);
+            SaveWindowState();
         }
 
         private void borrarTiemposToolStripMenuItem_Click(object sender, EventArgs e)
@@ -319,13 +331,12 @@ namespace GameTime
 
         private void FrMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.Location = Location;
-            Properties.Settings.Default.Save();
+            SaveWindowState();
         }
 
         private void FrMain_Load(object sender, EventArgs e)
         {
-            Location = Properties.Settings.Default.Location;
+            SetWindowState();
         }
     }
 }
