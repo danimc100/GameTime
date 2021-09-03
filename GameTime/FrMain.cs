@@ -164,6 +164,20 @@ namespace GameTime
             }
         }
 
+        private void SetMinimizedWindow()
+        {
+            WindowState = FormWindowState.Minimized;
+            Hide();
+            ShowInTaskbar = false;
+        }
+
+        private void SetNormalWindow()
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+            ShowInTaskbar = true;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             AddProcess();
@@ -295,16 +309,13 @@ namespace GameTime
         {
             if( WindowState == FormWindowState.Minimized )
             {
-                Hide();
-                ShowInTaskbar = false;
+                SetMinimizedWindow();
             }
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Show();
-            ShowInTaskbar = true;
-            WindowState = FormWindowState.Normal;
+            SetNormalWindow();
         }
     }
 }
