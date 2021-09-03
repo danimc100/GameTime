@@ -157,7 +157,7 @@ namespace GameTime
             // 
             this.borrarTiemposToolStripMenuItem.Name = "borrarTiemposToolStripMenuItem";
             this.borrarTiemposToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.borrarTiemposToolStripMenuItem.Text = "Borrar &tiempos";
+            this.borrarTiemposToolStripMenuItem.Text = "&Borrar tiempo parcial";
             this.borrarTiemposToolStripMenuItem.Click += new System.EventHandler(this.borrarTiemposToolStripMenuItem_Click);
             // 
             // cambiarTiempoTotalToolStripMenuItem
@@ -314,7 +314,9 @@ namespace GameTime
             this.Name = "FrMain";
             this.Text = "GameList";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.Load += new System.EventHandler(this.FrMain_Load);
             this.Resize += new System.EventHandler(this.FrMain_Resize);
             this.contextMenuListView.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

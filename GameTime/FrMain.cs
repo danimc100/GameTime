@@ -264,7 +264,6 @@ namespace GameTime
                 if (gameItem != null)
                 {
                     gameItem.PartialTime = new TimeSpan(0);
-                    gameItem.TotalTime = new TimeSpan(0);
                     UpdateView(true);
                     TimeChanged(true);
                 }
@@ -316,6 +315,17 @@ namespace GameTime
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             SetNormalWindow();
+        }
+
+        private void FrMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Location = Location;
+            Properties.Settings.Default.Save();
+        }
+
+        private void FrMain_Load(object sender, EventArgs e)
+        {
+            Location = Properties.Settings.Default.Location;
         }
     }
 }
