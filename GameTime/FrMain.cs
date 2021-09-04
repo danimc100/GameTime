@@ -180,8 +180,11 @@ namespace GameTime
 
         private void SaveWindowState()
         {
-            Properties.Settings.Default.Location = Location;
-            Properties.Settings.Default.Save();
+            if(WindowState == FormWindowState.Normal)
+            {
+                Properties.Settings.Default.Location = Location;
+                Properties.Settings.Default.Save();
+            }
         }
 
         private void SetWindowState()
