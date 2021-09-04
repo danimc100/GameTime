@@ -186,6 +186,7 @@ namespace GameTime
 
         private void SetWindowState()
         {
+            SetNormalWindow();
             Location = Properties.Settings.Default.Location;
         }
 
