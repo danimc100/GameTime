@@ -14,6 +14,9 @@ namespace GameTime.Core
     {
         private const string FILE_NAME = "GameList.data";
         private const string FILE_NAME_HISTORIC = "GameListHistoric.data";
+        private const string FILE_NAME_BKP = "GameList-{0}.data";
+        private const string FILE_NAME_HISTORIC_BKP = "GameListHistoric-{0}.data";
+        private const string BKP_DATETIME_FORMAT = "yyyyMMddhhmmss";
 
         private List<GameState> _list;
         private List<GameState> _historic;
@@ -152,8 +155,16 @@ namespace GameTime.Core
 
         public void SaveDate()
         {
+            DateTime now = DateTime.Now;
+            string bkpDatetimeFormat = now.ToString(BKP_DATETIME_FORMAT);
+
             if (List.Count > 0)
             {
+                if(File.Exists(FILE_NAME))
+                {
+                    File.Move(FILE_NAME, string.Format(FILE_NAME_BKP, bkpDatetimeFormat));
+                }
+                
                 var stream = File.CreateText(FILE_NAME);
                 string data = System.Text.Json.JsonSerializer.Serialize(List);
                 stream.WriteLine(data);
@@ -162,6 +173,11 @@ namespace GameTime.Core
 
             if(Historic.Count > 0)
             {
+                if(File.Exists(FILE_NAME_HISTORIC))
+                {
+                    File.Move(FILE_NAME_HISTORIC, string.Format(FILE_NAME_HISTORIC_BKP, bkpDatetimeFormat));
+                }
+
                 var stream = File.CreateText(FILE_NAME_HISTORIC);
                 string data = System.Text.Json.JsonSerializer.Serialize(Historic);
                 stream.WriteLine(data);
@@ -176,7 +192,14 @@ namespace GameTime.Core
                 var data = File.ReadAllText(FILE_NAME);
                 if (!string.IsNullOrWhiteSpace(data))
                 {
-                    _list = JsonSerializer.Deserialize<List<GameState>>(data);
+                    try
+                    {
+                        _list = JsonSerializer.Deserialize<List<GameState>>(data);
+                    }
+                    catch(Exception)
+                    {
+
+                    }
                 }
             }
 
@@ -185,7 +208,14 @@ namespace GameTime.Core
                 var data = File.ReadAllText(FILE_NAME_HISTORIC);
                 if(!string.IsNullOrWhiteSpace(data))
                 {
-                    _historic = JsonSerializer.Deserialize<List<GameState>>(data);
+                    try
+                    {
+                        _historic = JsonSerializer.Deserialize<List<GameState>>(data);
+                    }
+                    catch(Exception)
+                    {
+
+                    }
                 }
             }
         }
