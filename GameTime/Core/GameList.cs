@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
+using GameTime.Enum;
 
 namespace GameTime.Core
 {
@@ -29,8 +30,6 @@ namespace GameTime.Core
             _historic = new List<GameState>();
             currentProcessLst = new List<ProcessItem>();
             sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
-
-            LoadData();
         }
 
         public List<GameState> List
@@ -185,8 +184,11 @@ namespace GameTime.Core
             }
         }
 
-        public void LoadData()
+        public GameListResult LoadData()
         {
+            GameListResult resultData = GameListResult.Ok;
+            GameListResult resultDataHistoric = GameListResult.Ok;
+
             if (File.Exists(FILE_NAME))
             {
                 var data = File.ReadAllText(FILE_NAME);
@@ -198,7 +200,7 @@ namespace GameTime.Core
                     }
                     catch(Exception)
                     {
-
+                        resultData = GameListResult.ErrorReadData;
                     }
                 }
             }
@@ -214,9 +216,18 @@ namespace GameTime.Core
                     }
                     catch(Exception)
                     {
-
+                        resultDataHistoric = GameListResult.ErrorReadData;
                     }
                 }
+            }
+
+            if(resultData == GameListResult.ErrorReadData || resultDataHistoric == GameListResult.ErrorReadData)
+            {
+                return GameListResult.ErrorReadData;
+            }
+            else
+            {
+                return GameListResult.Ok;
             }
         }
     }

@@ -24,7 +24,13 @@ namespace GameTime
         public FrMain()
         {
             InitializeComponent();
+
             gameList = new GameList();
+            if(gameList.LoadData() != Enum.GameListResult.Ok)
+            {
+                MessageBox.Show("Se ha producido un error al cargar la base de datos.");
+            }
+
             listView1.SetDoubleBuffered(true);
             timer1.Interval = TIMER_INTERVAL;
             UpdateProcess();
@@ -105,8 +111,8 @@ namespace GameTime
                 BatteryInformation bi = controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
                 progressBar1.Value = (int)bi.BatteryLevel;
                 label3.Text = string.Format("{0} - {1}",
-                        Enum.GetName(typeof(BatteryLevel), bi.BatteryLevel),
-                        Enum.GetName(typeof(BatteryType), bi.BatteryType)
+                        System.Enum.GetName(typeof(BatteryLevel), bi.BatteryLevel),
+                        System.Enum.GetName(typeof(BatteryType), bi.BatteryType)
                         );
             }
             else

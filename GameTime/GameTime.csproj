@@ -101,6 +101,7 @@
     <Compile Include="Core\ListViewExtension.cs" />
     <Compile Include="Core\ProcessItem.cs" />
     <Compile Include="Core\Utils.cs" />
+    <Compile Include="Enum\GameListResult.cs" />
     <Compile Include="FrHistoric.cs">
       <SubType>Form</SubType>
     </Compile>
