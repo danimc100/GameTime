@@ -13,11 +13,13 @@ namespace GameTime.Core
 {
     public class GameList
     {
-        private const string FILE_NAME = "GameList.data";
-        private const string FILE_NAME_HISTORIC = "GameListHistoric.data";
-        private const string FILE_NAME_BKP = "GameList-{0}.data";
+        private const string FILE_NAME              = "GameList.data";
+        private const string FILE_NAME_HISTORIC     = "GameListHistoric.data";
+        private const string FILE_NAME_BKP          = "GameList-{0}.data";
         private const string FILE_NAME_HISTORIC_BKP = "GameListHistoric-{0}.data";
-        private const string BKP_DATETIME_FORMAT = "yyyyMMddhhmmss";
+        private const string BKP_DATETIME_FORMAT    = "yyyyMMddhhmmss";
+        private const string BACKUP_DIR             = "backup";
+        private const double DAYS_MANTAIN_BACKUP    = -10;
 
         private List<GameState> _list;
         private List<GameState> _historic;
@@ -161,7 +163,8 @@ namespace GameTime.Core
             {
                 if(File.Exists(FILE_NAME))
                 {
-                    File.Move(FILE_NAME, string.Format(FILE_NAME_BKP, bkpDatetimeFormat));
+                    string dest = Path.Combine(BACKUP_DIR, string.Format(FILE_NAME_BKP, bkpDatetimeFormat));
+                    File.Move(FILE_NAME, dest);
                 }
                 
                 var stream = File.CreateText(FILE_NAME);
@@ -174,7 +177,8 @@ namespace GameTime.Core
             {
                 if(File.Exists(FILE_NAME_HISTORIC))
                 {
-                    File.Move(FILE_NAME_HISTORIC, string.Format(FILE_NAME_HISTORIC_BKP, bkpDatetimeFormat));
+                    string dest = Path.Combine(BACKUP_DIR, string.Format(FILE_NAME_HISTORIC_BKP, bkpDatetimeFormat));
+                    File.Move(FILE_NAME_HISTORIC, dest);
                 }
 
                 var stream = File.CreateText(FILE_NAME_HISTORIC);
@@ -182,6 +186,8 @@ namespace GameTime.Core
                 stream.WriteLine(data);
                 stream.Close();
             }
+
+            DeleteOldBackupFiles();
         }
 
         public GameListResult LoadData()
@@ -228,6 +234,21 @@ namespace GameTime.Core
             else
             {
                 return GameListResult.Ok;
+            }
+        }
+
+        private void DeleteOldBackupFiles()
+        {
+            string[] files = Directory.GetFiles(BACKUP_DIR);
+            DateTime dateRef = DateTime.Now.AddDays(DAYS_MANTAIN_BACKUP);
+            
+            foreach(string file in files)
+            {
+                FileInfo fInfo = new FileInfo(file);
+                if(fInfo.LastWriteTime < dateRef)
+                {
+                    fInfo.Delete();
+                }
             }
         }
     }
