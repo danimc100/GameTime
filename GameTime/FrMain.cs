@@ -348,5 +348,21 @@ namespace GameTime
         {
             SetWindowState();
         }
+
+        private void borrarTiempoParcialYBorrarDelTotalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(listView1.SelectedItems.Count > 0)
+            {
+                var name = listView1.SelectedItems[0].Name;
+                var gameItem = gameList.Get(name);
+                if(gameItem != null)
+                {
+                    gameItem.TotalTime = gameItem.TotalTime.Subtract(gameItem.PartialTime);
+                    gameItem.PartialTime = new TimeSpan(0);
+                    UpdateView(true);
+                    TimeChanged(true);
+                }
+            }
+        }
     }
 }
