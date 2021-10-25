@@ -69,40 +69,26 @@ namespace GameTime.Core
             }
         }
 
-        public List<string> GetProcessList(bool newFirst = false)
+        public List<string> GetProcessList()
         {
-            if(newFirst)
-            {
-                var pList = Process.GetProcesses().ToList();
+            return System.Diagnostics.Process.GetProcesses()
+                .Where(p => p.SessionId == sessionId)
+                .Where(p => p.MainWindowHandle != IntPtr.Zero && p.ProcessName != "explorer")
+                .Select(f => f.ProcessName)
+                .OrderBy(f => f)
+                .Distinct()
+                .ToList();
+        }
 
-                foreach (Process p in pList)
-                {
-                    if (!currentProcessLst.Exists(cpl => cpl.Name == p.ProcessName))
-                    {
-                        currentProcessLst.Add(new ProcessItem(p.ProcessName));
-                    }
-                }
-
-                currentProcessLst = (from cuLst in currentProcessLst
-                                     join p in pList on cuLst.Name equals p.ProcessName
-                                     select cuLst).ToList();
-
-                return currentProcessLst
-                    .OrderByDescending(c => c.Inserted)
-                    .ThenBy(c => c.Name)
-                    .Select(c => c.Name)
-                    .Distinct()
-                    .ToList<string>();
-            }
-            else
-            {
-                return System.Diagnostics.Process.GetProcesses()
-                    .Where(p => p.SessionId == sessionId)
-                    .Select(f => f.ProcessName)
-                    .OrderBy(f => f)
-                    .Distinct()
-                    .ToList();
-            }
+        public List<ProcessInfo> GetProcessInfoList()
+        {
+            return System.Diagnostics.Process.GetProcesses()
+                .Where(p => p.SessionId == sessionId)
+                .Where(p => p.MainWindowHandle != IntPtr.Zero && p.ProcessName != "explorer")
+                .Select(f => new ProcessInfo { ProcessName = f.ProcessName, ProcessTitle = f.MainWindowTitle })
+                .OrderBy(f => f.ProcessName)
+                .Distinct()
+                .ToList();
         }
 
         public bool Exists(string name)

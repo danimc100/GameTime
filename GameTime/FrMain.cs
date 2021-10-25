@@ -53,7 +53,8 @@ namespace GameTime
         {
             if (comboBox1.SelectedItem != null)
             {
-                gameList.Add(comboBox1.SelectedItem.ToString());
+                ProcessInfo pInfo = comboBox1.SelectedItem as ProcessInfo;
+                gameList.Add(pInfo.ProcessName);
                 UpdateView();
             }
         }
@@ -98,7 +99,7 @@ namespace GameTime
 
         private void UpdateProcess()
         {
-            var pList = gameList.GetProcessList(true);
+            var pList = gameList.GetProcessInfoList(); //gameList.GetProcessList(true);
             comboBox1.Items.Clear();
             comboBox1.Items.AddRange(pList.ToArray());
         }
