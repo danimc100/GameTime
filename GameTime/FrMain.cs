@@ -17,6 +17,7 @@ namespace GameTime
         private const int TIMER_INTERVAL = 1000;
         private Controller controller;
         private GameList gameList;
+        private bool lastAnyActive;
         private FrHistoric frHistoric;
         private FrTime frTime;
         private bool timeChanged;
@@ -25,6 +26,7 @@ namespace GameTime
         {
             InitializeComponent();
 
+            lastAnyActive = false;
             gameList = new GameList();
             if(gameList.LoadData() != Enum.GameListResult.Ok)
             {
@@ -200,6 +202,13 @@ namespace GameTime
             Location = Properties.Settings.Default.Location;
         }
 
+        private void SaveGameListAndWindowStatus()
+        {
+            gameList.SaveDate();
+            TimeChanged(false);
+            SaveWindowState();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             AddProcess();
@@ -209,8 +218,15 @@ namespace GameTime
         {
             var elapsed = new TimeSpan(0, 0, 0, 0, timer1.Interval);
             gameList.CheckGames(elapsed);
+            bool anyActive = gameList.AnyActive;
             UpdateView();
             UpdateController();
+
+            if(anyActive != lastAnyActive && !anyActive)
+            {
+                SaveGameListAndWindowStatus();
+            }
+            lastAnyActive = anyActive;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -273,9 +289,7 @@ namespace GameTime
 
         private void button3_Click(object sender, EventArgs e)
         {
-            gameList.SaveDate();
-            TimeChanged(false);
-            SaveWindowState();
+            SaveGameListAndWindowStatus();
         }
 
         private void borrarTiemposToolStripMenuItem_Click(object sender, EventArgs e)
