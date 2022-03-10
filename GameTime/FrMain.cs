@@ -221,6 +221,13 @@ namespace GameTime
             return audio.GetDevice(guidDev);
         }
 
+        private void SetAudioDevice(string id)
+        {
+            CoreAudioDevice dev = GetAudioDevice(id);
+            audio.SetDefaultDevice(dev);
+            label4.Text = dev.FullName;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             AddProcess();
@@ -405,16 +412,12 @@ namespace GameTime
             // 0df989fc-73a8-4d18-b87f-48dfad2a706a - Micrófono(Steam Streaming Microphone)
             // 4091f02d-5de3-4113-b825-293cb0020e22 - Micrófono de los auriculares con micrófono(CORSAIR VOID ELITE USB Gaming Headset)
 
-            var dev = GetAudioDevice("1ade7f2f-af6c-42c5-8e81-227f94219e54");
-            audio.SetDefaultDevice(dev);
-            label4.Text = dev.FullName;
+            SetAudioDevice("1ade7f2f-af6c-42c5-8e81-227f94219e54");
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            var dev = GetAudioDevice("7fd698eb-8576-45d9-b2bc-c40124dfb1da");
-            audio.SetDefaultDevice(dev);
-            label4.Text = dev.FullName;
+            SetAudioDevice("7fd698eb-8576-45d9-b2bc-c40124dfb1da");
         }
     }
 }
