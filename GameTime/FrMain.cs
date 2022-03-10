@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SharpDX.XInput;
 using GameTime.Core;
+using AudioSwitcher.AudioApi.CoreAudio;
 
 namespace GameTime
 {
@@ -21,6 +22,7 @@ namespace GameTime
         private FrHistoric frHistoric;
         private FrTime frTime;
         private bool timeChanged;
+        private CoreAudioController audio;
 
         public FrMain()
         {
@@ -49,6 +51,10 @@ namespace GameTime
             //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             //var list = System.Diagnostics.Process.GetProcesses().Where(p => p.SessionId == sessionId).ToList();
             //var t = new TimeSpan(7, 30, 0).Ticks;
+
+            audio = new CoreAudioController();
+            var dev = audio.GetDefaultDevice(AudioSwitcher.AudioApi.DeviceType.Playback, AudioSwitcher.AudioApi.Role.Multimedia);
+            label4.Text = dev.FullName;
         }
 
         private void AddProcess()
@@ -207,6 +213,12 @@ namespace GameTime
             gameList.SaveDate();
             TimeChanged(false);
             SaveWindowState();
+        }
+
+        private CoreAudioDevice GetAudioDevice(string id)
+        {
+            Guid guidDev = new Guid(id);
+            return audio.GetDevice(guidDev);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -378,6 +390,31 @@ namespace GameTime
                     TimeChanged(true);
                 }
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            // 003e4acb-25cb-465c-a493-81cb1604c3c0 - MP59G(NVIDIA High Definition Audio)
+            // 1ade7f2f-af6c-42c5-8e81-227f94219e54 - Audífono de los auriculares con micrófono(CORSAIR VOID ELITE USB Gaming Headset)
+            // 1f29f106-5efc-4c70-aa77-ab26a4aeb931 - BenQ VW2420H(NVIDIA High Definition Audio)
+            // 5b2958a8-8008-4b81-aa9e-985c236d793f - Altavoces(Steam Streaming Microphone)
+            // 7fd698eb-8576-45d9-b2bc-c40124dfb1da - Altavoces(Realtek(R) Audio)
+            // b009b6d9-5002-4812-8cf3-38bf81273a7e - Altavoces(Steam Streaming Speakers)
+            // de44bf54-c3a7-426e-abfb-16d8dbe04141 - Realtek Digital Output(Realtek(R) Audio)
+            // e4b2dcc0-b582-4696-be9d-05b1a57e2235 - LG FULL HD(NVIDIA High Definition Audio)
+            // 0df989fc-73a8-4d18-b87f-48dfad2a706a - Micrófono(Steam Streaming Microphone)
+            // 4091f02d-5de3-4113-b825-293cb0020e22 - Micrófono de los auriculares con micrófono(CORSAIR VOID ELITE USB Gaming Headset)
+
+            var dev = GetAudioDevice("1ade7f2f-af6c-42c5-8e81-227f94219e54");
+            audio.SetDefaultDevice(dev);
+            label4.Text = dev.FullName;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var dev = GetAudioDevice("7fd698eb-8576-45d9-b2bc-c40124dfb1da");
+            audio.SetDefaultDevice(dev);
+            label4.Text = dev.FullName;
         }
     }
 }

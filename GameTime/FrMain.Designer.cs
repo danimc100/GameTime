@@ -43,6 +43,7 @@ namespace GameTime
             this.editarTítuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.borrarTiemposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cambiarTiempoTotalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.eliminarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +60,9 @@ namespace GameTime
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.contextMenuListView.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -140,56 +143,63 @@ namespace GameTime
             this.toolStripSeparator1,
             this.guardarEnHistóricoToolStripMenuItem});
             this.contextMenuListView.Name = "contextMenuListView";
-            this.contextMenuListView.Size = new System.Drawing.Size(232, 176);
+            this.contextMenuListView.Size = new System.Drawing.Size(232, 154);
             this.contextMenuListView.Text = "Editar título";
             // 
             // editarTítuloToolStripMenuItem
             // 
             this.editarTítuloToolStripMenuItem.Name = "editarTítuloToolStripMenuItem";
-            this.editarTítuloToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.editarTítuloToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.editarTítuloToolStripMenuItem.Text = "E&ditar título";
             this.editarTítuloToolStripMenuItem.Click += new System.EventHandler(this.editarTítuloToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(228, 6);
             // 
             // borrarTiemposToolStripMenuItem
             // 
             this.borrarTiemposToolStripMenuItem.Name = "borrarTiemposToolStripMenuItem";
-            this.borrarTiemposToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.borrarTiemposToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.borrarTiemposToolStripMenuItem.Text = "&Borrar tiempo parcial";
             this.borrarTiemposToolStripMenuItem.Click += new System.EventHandler(this.borrarTiemposToolStripMenuItem_Click);
+            // 
+            // borrarTiempoParcialYBorrarDelTotalToolStripMenuItem
+            // 
+            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Name = "borrarTiempoParcialYBorrarDelTotalToolStripMenuItem";
+            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Text = "Borrar parcial y restar del total";
+            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Click += new System.EventHandler(this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem_Click);
             // 
             // cambiarTiempoTotalToolStripMenuItem
             // 
             this.cambiarTiempoTotalToolStripMenuItem.Name = "cambiarTiempoTotalToolStripMenuItem";
-            this.cambiarTiempoTotalToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.cambiarTiempoTotalToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.cambiarTiempoTotalToolStripMenuItem.Text = "&Cambiar tiempo total";
             this.cambiarTiempoTotalToolStripMenuItem.Click += new System.EventHandler(this.cambiarTiempoTotalToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(228, 6);
             // 
             // eliminarToolStripMenuItem
             // 
             this.eliminarToolStripMenuItem.Name = "eliminarToolStripMenuItem";
-            this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.eliminarToolStripMenuItem.Text = "&Eliminar";
             this.eliminarToolStripMenuItem.Click += new System.EventHandler(this.eliminarToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(228, 6);
             // 
             // guardarEnHistóricoToolStripMenuItem
             // 
             this.guardarEnHistóricoToolStripMenuItem.Name = "guardarEnHistóricoToolStripMenuItem";
-            this.guardarEnHistóricoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.guardarEnHistóricoToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.guardarEnHistóricoToolStripMenuItem.Text = "&Guardar en histórico";
             this.guardarEnHistóricoToolStripMenuItem.Click += new System.EventHandler(this.guardarEnHistóricoToolStripMenuItem_Click);
             // 
@@ -259,7 +269,7 @@ namespace GameTime
             this.groupBox1.Controls.Add(this.progressBar1);
             this.groupBox1.Location = new System.Drawing.Point(12, 315);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(743, 72);
+            this.groupBox1.Size = new System.Drawing.Size(596, 72);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Controlador";
@@ -297,18 +307,43 @@ namespace GameTime
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
-            // borrarTiempoParcialYBorrarDelTotalToolStripMenuItem
+            // button5
             // 
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Name = "borrarTiempoParcialYBorrarDelTotalToolStripMenuItem";
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Text = "Borrar parcial y restar del total";
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Click += new System.EventHandler(this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem_Click);
+            this.button5.Location = new System.Drawing.Point(614, 325);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 56);
+            this.button5.TabIndex = 10;
+            this.button5.Text = "Cascos";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(695, 325);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 56);
+            this.button6.TabIndex = 11;
+            this.button6.Text = "Altavoces";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(174, 291);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "label4";
             // 
             // FrMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(782, 399);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button4);
@@ -366,6 +401,9 @@ namespace GameTime
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripMenuItem borrarTiempoParcialYBorrarDelTotalToolStripMenuItem;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label label4;
     }
 }
 
