@@ -224,8 +224,15 @@ namespace GameTime
         private void SetAudioDevice(string id)
         {
             CoreAudioDevice dev = GetAudioDevice(id);
-            audio.SetDefaultDevice(dev);
-            label4.Text = dev.FullName;
+            if(dev != null)
+            {
+                audio.SetDefaultDevice(dev);
+                label4.Text = dev.FullName;
+            }
+            else
+            {
+                MessageBox.Show("No se ha encontrado el dispositivo de audio.");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
