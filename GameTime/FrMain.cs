@@ -401,23 +401,25 @@ namespace GameTime
 
         private void button5_Click(object sender, EventArgs e)
         {
-            // 003e4acb-25cb-465c-a493-81cb1604c3c0 - MP59G(NVIDIA High Definition Audio)
-            // 1ade7f2f-af6c-42c5-8e81-227f94219e54 - Audífono de los auriculares con micrófono(CORSAIR VOID ELITE USB Gaming Headset)
-            // 1f29f106-5efc-4c70-aa77-ab26a4aeb931 - BenQ VW2420H(NVIDIA High Definition Audio)
-            // 5b2958a8-8008-4b81-aa9e-985c236d793f - Altavoces(Steam Streaming Microphone)
-            // 7fd698eb-8576-45d9-b2bc-c40124dfb1da - Altavoces(Realtek(R) Audio)
-            // b009b6d9-5002-4812-8cf3-38bf81273a7e - Altavoces(Steam Streaming Speakers)
-            // de44bf54-c3a7-426e-abfb-16d8dbe04141 - Realtek Digital Output(Realtek(R) Audio)
-            // e4b2dcc0-b582-4696-be9d-05b1a57e2235 - LG FULL HD(NVIDIA High Definition Audio)
-            // 0df989fc-73a8-4d18-b87f-48dfad2a706a - Micrófono(Steam Streaming Microphone)
-            // 4091f02d-5de3-4113-b825-293cb0020e22 - Micrófono de los auriculares con micrófono(CORSAIR VOID ELITE USB Gaming Headset)
+            //0daf5ea1-d35d-430d-a624-e93aa8c977d9 - Altavoces(Realtek(R) Audio)
+            //3ff9be9d-6c34-4d29-a3b4-7b14428170fd - BenQ VW2420H(NVIDIA High Definition Audio)
+            //459b4764-7c8a-40f0-873f-3099edcc0e94 - Audífono de los auriculares con micrófono(CORSAIR VOID ELITE USB Gaming Headset)
+            //88271405-aabe-4bc9-aed5-5a7173dfd350 - MP59G(NVIDIA High Definition Audio)
+            //919899b4-0a6a-4dc0-b33e-40bd2d36fae6 - LG FULL HD(NVIDIA High Definition Audio)
+            //a1f3945d-38df-4812-93ab-f7cd69ba34c7 - Realtek Digital Output(Realtek(R) Audio)
+            //c9b865df-668f-4ce2-ae23-31d0182376f0 - Altavoces(Steam Streaming Speakers)
+            //e6eac6aa-cefa-4276-a2c2-fb880fcf9b2e - Altavoces(Steam Streaming Microphone)
+            //0e1b44bd-ebe8-4bc0-8810-d091b102bf51 - Micrófono de los auriculares con micrófono(CORSAIR VOID ELITE USB Gaming Headset)
+            //8d00347f-445e-475c-948a-4dd32f90f8d3 - Micrófono(Steam Streaming Microphone)
 
-            SetAudioDevice("1ade7f2f-af6c-42c5-8e81-227f94219e54");
+            // Cascos
+            SetAudioDevice("459b4764-7c8a-40f0-873f-3099edcc0e94");
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            SetAudioDevice("7fd698eb-8576-45d9-b2bc-c40124dfb1da");
+            // Altavoces
+            SetAudioDevice("0daf5ea1-d35d-430d-a624-e93aa8c977d9");
         }
     }
 }
