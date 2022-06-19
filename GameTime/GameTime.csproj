@@ -101,6 +101,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\AudioDeviceItem.cs" />
     <Compile Include="Core\Dialogs.cs" />
     <Compile Include="Core\GameList.cs" />
     <Compile Include="Core\GameState.cs" />

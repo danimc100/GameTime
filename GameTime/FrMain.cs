@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.Json;
+using System.IO;
 using SharpDX.XInput;
 using GameTime.Core;
 using AudioSwitcher.AudioApi.CoreAudio;
@@ -15,7 +17,8 @@ namespace GameTime
 {
     public partial class FrMain : Form
     {
-        private const int TIMER_INTERVAL = 1000;
+        private const int TIMER_INTERVAL = 5000;
+        private const string AUDIODEVICECFG_NAME = "AudioDevices.cfg";
         private Controller controller;
         private GameList gameList;
         private bool lastAnyActive;
@@ -23,6 +26,7 @@ namespace GameTime
         private FrTime frTime;
         private bool timeChanged;
         private CoreAudioController audio;
+        private List<GameTime.Core.AudioDeviceItem> list;
 
         public FrMain()
         {
@@ -53,8 +57,22 @@ namespace GameTime
             //var t = new TimeSpan(7, 30, 0).Ticks;
 
             audio = new CoreAudioController();
-            var dev = audio.GetDefaultDevice(AudioSwitcher.AudioApi.DeviceType.Playback, AudioSwitcher.AudioApi.Role.Multimedia);
+            CoreAudioDevice dev = audio.GetDefaultDevice(AudioSwitcher.AudioApi.DeviceType.Playback, AudioSwitcher.AudioApi.Role.Multimedia);
             label4.Text = dev.FullName;
+
+            //var devices = audio.GetDevices();
+            //var list = new List<AudioDeviceItem>();
+            //list.Add(new AudioDeviceItem { Key = "cascos", Name = "Audífono de los auriculares con micrófono (CORSAIR VOID ELITE USB Gaming Headset)", Id = "2aeffc83-75fb-4581-868b-db51a053aab1" });
+            //list.Add(new AudioDeviceItem { Key = "altavoces", Name = "Altavoces (Steam Streaming Speakers)", Id = "a5a0fb4c-6d0f-4b06-abf9-dbaef3b59b1a" });
+            //File.WriteAllText(AUDIODEVICECFG_NAME, JsonSerializer.Serialize(list));
+
+            list = JsonSerializer.Deserialize<List<GameTime.Core.AudioDeviceItem>>(File.ReadAllText(AUDIODEVICECFG_NAME));
+            
+
+            //dev.Dispose();
+            //dev = null;
+            //audio.Dispose();
+            //audio = null;
         }
 
         private void AddProcess()
@@ -408,25 +426,16 @@ namespace GameTime
 
         private void button5_Click(object sender, EventArgs e)
         {
-            //0daf5ea1-d35d-430d-a624-e93aa8c977d9 - Altavoces(Realtek(R) Audio)
-            //3ff9be9d-6c34-4d29-a3b4-7b14428170fd - BenQ VW2420H(NVIDIA High Definition Audio)
-            //459b4764-7c8a-40f0-873f-3099edcc0e94 - Audífono de los auriculares con micrófono(CORSAIR VOID ELITE USB Gaming Headset)
-            //88271405-aabe-4bc9-aed5-5a7173dfd350 - MP59G(NVIDIA High Definition Audio)
-            //919899b4-0a6a-4dc0-b33e-40bd2d36fae6 - LG FULL HD(NVIDIA High Definition Audio)
-            //a1f3945d-38df-4812-93ab-f7cd69ba34c7 - Realtek Digital Output(Realtek(R) Audio)
-            //c9b865df-668f-4ce2-ae23-31d0182376f0 - Altavoces(Steam Streaming Speakers)
-            //e6eac6aa-cefa-4276-a2c2-fb880fcf9b2e - Altavoces(Steam Streaming Microphone)
-            //0e1b44bd-ebe8-4bc0-8810-d091b102bf51 - Micrófono de los auriculares con micrófono(CORSAIR VOID ELITE USB Gaming Headset)
-            //8d00347f-445e-475c-948a-4dd32f90f8d3 - Micrófono(Steam Streaming Microphone)
-
             // Cascos
-            SetAudioDevice("459b4764-7c8a-40f0-873f-3099edcc0e94");
+            // Audífono de los auriculares con micrófono (CORSAIR VOID ELITE USB Gaming Headset)
+            SetAudioDevice(list.Find(d => d.Key == "cascos").Id); //  "2aeffc83-75fb-4581-868b-db51a053aab1");
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             // Altavoces
-            SetAudioDevice("0daf5ea1-d35d-430d-a624-e93aa8c977d9");
+            // Altavoces (Realtek(R) Audio)
+            SetAudioDevice(list.Find(d => d.Key == "altavoces").Id); //"a5a0fb4c-6d0f-4b06-abf9-dbaef3b59b1a");
         }
     }
 }
