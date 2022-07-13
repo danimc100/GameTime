@@ -26,6 +26,7 @@ namespace GameTime
         private FrTime frTime;
         private bool timeChanged;
         private CoreAudioController audio;
+        private IEnumerable<CoreAudioDevice> audioDeviceList;
         private List<GameTime.Core.AudioDeviceItem> list;
 
         public FrMain()
@@ -34,7 +35,7 @@ namespace GameTime
 
             lastAnyActive = false;
             gameList = new GameList();
-            if(gameList.LoadData() != Enum.GameListResult.Ok)
+            if (gameList.LoadData() != Enum.GameListResult.Ok)
             {
                 MessageBox.Show("Se ha producido un error al cargar la base de datos.");
             }
@@ -56,9 +57,11 @@ namespace GameTime
             //var list = System.Diagnostics.Process.GetProcesses().Where(p => p.SessionId == sessionId).ToList();
             //var t = new TimeSpan(7, 30, 0).Ticks;
 
-            audio = new CoreAudioController();
-            CoreAudioDevice dev = audio.GetDefaultDevice(AudioSwitcher.AudioApi.DeviceType.Playback, AudioSwitcher.AudioApi.Role.Multimedia);
-            label4.Text = dev.FullName;
+            audio = null;
+            audioDeviceList = null;
+            //audio = new CoreAudioController();
+            //CoreAudioDevice dev = audio.GetDefaultDevice(AudioSwitcher.AudioApi.DeviceType.Playback, AudioSwitcher.AudioApi.Role.Multimedia);
+            //label4.Text = dev.FullName;
 
             //var devices = audio.GetDevices();
             //var list = new List<AudioDeviceItem>();
@@ -67,7 +70,6 @@ namespace GameTime
             //File.WriteAllText(AUDIODEVICECFG_NAME, JsonSerializer.Serialize(list));
 
             list = JsonSerializer.Deserialize<List<GameTime.Core.AudioDeviceItem>>(File.ReadAllText(AUDIODEVICECFG_NAME));
-            
 
             //dev.Dispose();
             //dev = null;
@@ -132,7 +134,7 @@ namespace GameTime
 
         private void UpdateController()
         {
-            if(controller.IsConnected)
+            if (controller.IsConnected)
             {
                 label2.Text = "Conectado";
                 BatteryInformation bi = controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
@@ -152,7 +154,7 @@ namespace GameTime
 
         private void ShowHistoric()
         {
-            if(frHistoric == null)
+            if (frHistoric == null)
             {
                 frHistoric = new FrHistoric();
                 frHistoric.GameList = gameList;
@@ -163,7 +165,7 @@ namespace GameTime
 
         private TimeSpan? ShowFrTime(TimeSpan time)
         {
-            if(frTime == null)
+            if (frTime == null)
             {
                 frTime = new FrTime();
             }
@@ -187,7 +189,7 @@ namespace GameTime
         private void TimeChanged(bool state)
         {
             timeChanged = state;
-            if(state)
+            if (state)
             {
                 button3.BackColor = Color.Orange;
             }
@@ -213,7 +215,7 @@ namespace GameTime
 
         private void SaveWindowState()
         {
-            if(WindowState == FormWindowState.Normal)
+            if (WindowState == FormWindowState.Normal)
             {
                 Properties.Settings.Default.Location = Location;
                 Properties.Settings.Default.Save();
@@ -233,16 +235,33 @@ namespace GameTime
             SaveWindowState();
         }
 
+        private IEnumerable<CoreAudioDevice> GetAudioDevices()
+        {
+            if (audio == null)
+            {
+                audio = new CoreAudioController();
+                audioDeviceList = audio.GetDevices();
+            }
+            return audioDeviceList;
+        }
+
         private CoreAudioDevice GetAudioDevice(string id)
         {
-            Guid guidDev = new Guid(id);
-            return audio.GetDevice(guidDev);
+            if(audio != null)
+            {
+                Guid guidDev = new Guid(id);
+                return audio.GetDevice(guidDev);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private void SetAudioDevice(string id)
         {
             CoreAudioDevice dev = GetAudioDevice(id);
-            if(dev != null)
+            if (dev != null)
             {
                 audio.SetDefaultDevice(dev);
                 label4.Text = dev.FullName;
@@ -266,7 +285,7 @@ namespace GameTime
             UpdateView();
             UpdateController();
 
-            if(anyActive != lastAnyActive && !anyActive)
+            if (anyActive != lastAnyActive && !anyActive)
             {
                 SaveGameListAndWindowStatus();
             }
@@ -287,7 +306,7 @@ namespace GameTime
 
         private void editarTítuloToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(listView1.SelectedItems.Count > 0)
+            if (listView1.SelectedItems.Count > 0)
             {
                 string name = listView1.SelectedItems[0].Name;
                 string title = listView1.SelectedItems[0].SubItems[1].Text;
@@ -310,7 +329,7 @@ namespace GameTime
 
         private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(listView1.SelectedItems.Count > 0)
+            if (listView1.SelectedItems.Count > 0)
             {
                 var item = listView1.SelectedItems[0];
                 string name = item.Name;
@@ -353,7 +372,7 @@ namespace GameTime
 
         private void guardarEnHistóricoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(listView1.SelectedItems.Count > 0)
+            if (listView1.SelectedItems.Count > 0)
             {
                 string name = listView1.SelectedItems[0].Name;
                 gameList.Historify(name);
@@ -371,12 +390,12 @@ namespace GameTime
 
         private void cambiarTiempoTotalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(listView1.SelectedItems.Count > 0)
+            if (listView1.SelectedItems.Count > 0)
             {
                 int index = listView1.SelectedItems[0].Index;
                 TimeSpan time = gameList.List[index].TotalTime;
                 TimeSpan? resultTime = ShowFrTime(time);
-                if(resultTime.HasValue)
+                if (resultTime.HasValue)
                 {
                     gameList.List[index].TotalTime = resultTime.Value;
                     UpdateView(true);
@@ -387,7 +406,7 @@ namespace GameTime
 
         private void FrMain_Resize(object sender, EventArgs e)
         {
-            if( WindowState == FormWindowState.Minimized )
+            if (WindowState == FormWindowState.Minimized)
             {
                 SetMinimizedWindow();
             }
@@ -410,11 +429,11 @@ namespace GameTime
 
         private void borrarTiempoParcialYBorrarDelTotalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(listView1.SelectedItems.Count > 0)
+            if (listView1.SelectedItems.Count > 0)
             {
                 var name = listView1.SelectedItems[0].Name;
                 var gameItem = gameList.Get(name);
-                if(gameItem != null)
+                if (gameItem != null)
                 {
                     gameItem.TotalTime = gameItem.TotalTime.Subtract(gameItem.PartialTime);
                     gameItem.PartialTime = new TimeSpan(0);
@@ -428,14 +447,44 @@ namespace GameTime
         {
             // Cascos
             // Audífono de los auriculares con micrófono (CORSAIR VOID ELITE USB Gaming Headset)
-            SetAudioDevice(list.Find(d => d.Key == "cascos").Id); //  "2aeffc83-75fb-4581-868b-db51a053aab1");
+            //SetAudioDevice(list.Find(d => d.Key == "cascos").Id); //  "2aeffc83-75fb-4581-868b-db51a053aab1");
+
+            // {{ Name = Audífono de los auriculares con micrófono, InterfaceName = CORSAIR VOID ELITE USB Gaming Headset }}
+            var lst = GetAudioDevices();
+            var device = lst
+                .Where(d => d.Name.Contains("Audífono de los auriculares con micrófono") && d.InterfaceName.Contains("CORSAIR VOID ELITE USB Gaming Headset"))
+                .FirstOrDefault();
+
+            if (device != null)
+            {
+                SetAudioDevice(device.Id.ToString());
+            }
+            else
+            {
+                MessageBox.Show("Dispositivo no encontrado.");
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             // Altavoces
             // Altavoces (Realtek(R) Audio)
-            SetAudioDevice(list.Find(d => d.Key == "altavoces").Id); //"a5a0fb4c-6d0f-4b06-abf9-dbaef3b59b1a");
+            //SetAudioDevice(list.Find(d => d.Key == "altavoces").Id); //"a5a0fb4c-6d0f-4b06-abf9-dbaef3b59b1a");
+
+            // {{ Name = Altavoces, InterfaceName = Realtek(R) Audio }}
+            var lst = GetAudioDevices();
+            var device = lst
+                .Where(d => d.Name.Contains("Altavoces") && d.InterfaceName.Contains("Realtek(R) Audio"))
+                .FirstOrDefault();
+
+            if (device != null)
+            {
+                SetAudioDevice(device.Id.ToString());
+            }
+            else
+            {
+                MessageBox.Show("Dispositivo no encontrado.");
+            }
         }
     }
 }
