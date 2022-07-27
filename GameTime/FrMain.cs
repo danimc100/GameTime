@@ -69,7 +69,7 @@ namespace GameTime
             //list.Add(new AudioDeviceItem { Key = "altavoces", Name = "Altavoces (Steam Streaming Speakers)", Id = "a5a0fb4c-6d0f-4b06-abf9-dbaef3b59b1a" });
             //File.WriteAllText(AUDIODEVICECFG_NAME, JsonSerializer.Serialize(list));
 
-            list = JsonSerializer.Deserialize<List<GameTime.Core.AudioDeviceItem>>(File.ReadAllText(AUDIODEVICECFG_NAME));
+            //list = JsonSerializer.Deserialize<List<GameTime.Core.AudioDeviceItem>>(File.ReadAllText(AUDIODEVICECFG_NAME));
 
             //dev.Dispose();
             //dev = null;
@@ -450,9 +450,13 @@ namespace GameTime
             //SetAudioDevice(list.Find(d => d.Key == "cascos").Id); //  "2aeffc83-75fb-4581-868b-db51a053aab1");
 
             // {{ Name = Audífono de los auriculares con micrófono, InterfaceName = CORSAIR VOID ELITE USB Gaming Headset }}
+            // {{ Name = Headset Earphone, InterfaceName = Poly Blackwire 3320 Series }}
+            // {{ Name = Headset Microphone, InterfaceName = Poly Blackwire 3320 Series }}
+
             var lst = GetAudioDevices();
             var device = lst
-                .Where(d => d.Name.Contains("Audífono de los auriculares con micrófono") && d.InterfaceName.Contains("CORSAIR VOID ELITE USB Gaming Headset"))
+                //.Where(d => d.Name.Contains("Audífono de los auriculares con micrófono") && d.InterfaceName.Contains("CORSAIR VOID ELITE USB Gaming Headset"))
+                .Where(d => d.Name.Contains("Headset Earphone") && d.InterfaceName.Contains("Poly Blackwire 3320 Series"))
                 .FirstOrDefault();
 
             if (device != null)
