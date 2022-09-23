@@ -27,7 +27,6 @@ namespace GameTime
         private bool timeChanged;
         private CoreAudioController audio;
         private IEnumerable<CoreAudioDevice> audioDeviceList;
-        private List<GameTime.Core.AudioDeviceItem> list;
 
         public FrMain()
         {
@@ -479,6 +478,31 @@ namespace GameTime
             var lst = GetAudioDevices();
             var device = lst
                 .Where(d => d.Name.Contains("Altavoces") && d.InterfaceName.Contains("Realtek(R) Audio"))
+                .FirstOrDefault();
+
+            if (device != null)
+            {
+                SetAudioDevice(device.Id.ToString());
+            }
+            else
+            {
+                MessageBox.Show("Dispositivo no encontrado.");
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            // Cascos
+            // Audífono de los auriculares con micrófono (CORSAIR VOID ELITE USB Gaming Headset)
+            //SetAudioDevice(list.Find(d => d.Key == "cascos").Id); //  "2aeffc83-75fb-4581-868b-db51a053aab1");
+
+            // {{ Name = Audífono de los auriculares con micrófono, InterfaceName = CORSAIR VOID ELITE USB Gaming Headset }}
+            // {{ Name = Headset Earphone, InterfaceName = Poly Blackwire 3320 Series }}
+            // {{ Name = Headset Microphone, InterfaceName = Poly Blackwire 3320 Series }}
+
+            var lst = GetAudioDevices();
+            var device = lst
+                .Where(d => d.Name.Contains("Audífono de los auriculares con micrófono") && d.InterfaceName.Contains("CORSAIR VOID ELITE USB Gaming Headset"))
                 .FirstOrDefault();
 
             if (device != null)

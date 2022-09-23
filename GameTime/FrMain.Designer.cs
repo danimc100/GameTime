@@ -63,6 +63,7 @@ namespace GameTime
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
             this.contextMenuListView.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -309,19 +310,19 @@ namespace GameTime
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(614, 325);
+            this.button5.Location = new System.Drawing.Point(614, 286);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 56);
+            this.button5.Size = new System.Drawing.Size(75, 50);
             this.button5.TabIndex = 10;
-            this.button5.Text = "Cascos";
+            this.button5.Text = "Cascos Platronics";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(695, 325);
+            this.button6.Location = new System.Drawing.Point(695, 286);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 56);
+            this.button6.Size = new System.Drawing.Size(75, 101);
             this.button6.TabIndex = 11;
             this.button6.Text = "Altavoces";
             this.button6.UseVisualStyleBackColor = true;
@@ -336,11 +337,22 @@ namespace GameTime
             this.label4.TabIndex = 12;
             this.label4.Text = "label4";
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(614, 342);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 45);
+            this.button7.TabIndex = 13;
+            this.button7.Text = " Cascos Corsair";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // FrMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(782, 399);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -404,6 +416,7 @@ namespace GameTime
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button7;
     }
 }
 
