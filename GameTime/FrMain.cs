@@ -19,7 +19,7 @@ namespace GameTime
     {
         private const int TIMER_INTERVAL = 5000;
         private const string AUDIODEVICECFG_NAME = "AudioDevices.cfg";
-        private Controller controller;
+        private Controller[] controller;
         private GameList gameList;
         private bool lastAnyActive;
         private FrHistoric frHistoric;
@@ -43,7 +43,18 @@ namespace GameTime
             timer1.Interval = TIMER_INTERVAL;
             UpdateProcess();
 
-            controller = new Controller(UserIndex.One);
+            int i = 0;
+            controller = new Controller[4];
+            foreach(UserIndex index in (UserIndex[]) System.Enum.GetValues(typeof(UserIndex)))
+            {
+                if(index != UserIndex.Any)
+                {
+                    controller[i] = new Controller(index);
+                    i++;
+                }
+            }
+            
+            //controller = new Controller( UserIndex.One);
 
             frHistoric = null;
             frTime = null;
@@ -133,10 +144,27 @@ namespace GameTime
 
         private void UpdateController()
         {
-            if (controller.IsConnected)
+            Controller con = controller
+                .Where(c => c.IsConnected)
+                .Where(c => c.GetBatteryInformation(BatteryDeviceType.Gamepad).BatteryType == BatteryType.Alkaline).FirstOrDefault();
+
+            if (con == null)
+            {
+                con = controller
+                    .Where(c => c.IsConnected)
+                    .Where(c => c.GetBatteryInformation(BatteryDeviceType.Gamepad).BatteryType == BatteryType.Nimh).FirstOrDefault();
+            }
+
+            if (con == null)
+            {
+                con = controller
+                    .Where(c => c.IsConnected).FirstOrDefault();
+            }
+
+            if (con != null && con.IsConnected)
             {
                 label2.Text = "Conectado";
-                BatteryInformation bi = controller.GetBatteryInformation(BatteryDeviceType.Gamepad);
+                BatteryInformation bi = con.GetBatteryInformation(BatteryDeviceType.Gamepad);
                 progressBar1.Value = (int)bi.BatteryLevel;
                 label3.Text = string.Format("{0} - {1}",
                         System.Enum.GetName(typeof(BatteryLevel), bi.BatteryLevel),
