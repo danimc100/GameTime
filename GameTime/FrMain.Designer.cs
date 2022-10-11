@@ -64,6 +64,10 @@ namespace GameTime
             this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
             this.contextMenuListView.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -102,7 +106,7 @@ namespace GameTime
             this.listView1.Location = new System.Drawing.Point(12, 74);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(758, 206);
+            this.listView1.Size = new System.Drawing.Size(822, 206);
             this.listView1.TabIndex = 3;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -265,12 +269,16 @@ namespace GameTime
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button11);
+            this.groupBox1.Controls.Add(this.button10);
+            this.groupBox1.Controls.Add(this.button9);
+            this.groupBox1.Controls.Add(this.button8);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.progressBar1);
             this.groupBox1.Location = new System.Drawing.Point(12, 315);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(596, 72);
+            this.groupBox1.Size = new System.Drawing.Size(660, 72);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Controlador";
@@ -310,7 +318,7 @@ namespace GameTime
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(614, 286);
+            this.button5.Location = new System.Drawing.Point(678, 286);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 50);
             this.button5.TabIndex = 10;
@@ -320,7 +328,7 @@ namespace GameTime
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(695, 286);
+            this.button6.Location = new System.Drawing.Point(759, 286);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 101);
             this.button6.TabIndex = 11;
@@ -339,7 +347,7 @@ namespace GameTime
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(614, 342);
+            this.button7.Location = new System.Drawing.Point(678, 342);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 45);
             this.button7.TabIndex = 13;
@@ -347,11 +355,55 @@ namespace GameTime
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // button8
+            // 
+            this.button8.Enabled = false;
+            this.button8.Location = new System.Drawing.Point(430, 14);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(109, 23);
+            this.button8.TabIndex = 3;
+            this.button8.Text = "N/A";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.Enabled = false;
+            this.button9.Location = new System.Drawing.Point(545, 14);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(109, 23);
+            this.button9.TabIndex = 4;
+            this.button9.Text = "N/A";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // button10
+            // 
+            this.button10.Enabled = false;
+            this.button10.Location = new System.Drawing.Point(430, 43);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(109, 23);
+            this.button10.TabIndex = 5;
+            this.button10.Text = "N/A";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button11
+            // 
+            this.button11.Enabled = false;
+            this.button11.Location = new System.Drawing.Point(545, 43);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(109, 23);
+            this.button11.TabIndex = 6;
+            this.button11.Text = "N/A";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
             // FrMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(782, 399);
+            this.ClientSize = new System.Drawing.Size(846, 399);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button6);
@@ -417,6 +469,10 @@ namespace GameTime
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button8;
     }
 }
 

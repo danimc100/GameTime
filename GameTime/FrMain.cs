@@ -19,7 +19,11 @@ namespace GameTime
     {
         private const int TIMER_INTERVAL = 5000;
         private const string AUDIODEVICECFG_NAME = "AudioDevices.cfg";
+        private const int NO_CONTROLLERS = 4;
+
         private Controller[] controller;
+        private int conSeleced;
+        private Button[] btnCon;
         private GameList gameList;
         private bool lastAnyActive;
         private FrHistoric frHistoric;
@@ -43,8 +47,10 @@ namespace GameTime
             timer1.Interval = TIMER_INTERVAL;
             UpdateProcess();
 
+
+            conSeleced = -1;
             int i = 0;
-            controller = new Controller[4];
+            controller = new Controller[NO_CONTROLLERS];
             foreach(UserIndex index in (UserIndex[]) System.Enum.GetValues(typeof(UserIndex)))
             {
                 if(index != UserIndex.Any)
@@ -53,8 +59,12 @@ namespace GameTime
                     i++;
                 }
             }
-            
-            //controller = new Controller( UserIndex.One);
+
+            btnCon = new Button[NO_CONTROLLERS];
+            btnCon[0] = button8;
+            btnCon[1] = button9;
+            btnCon[2] = button10;
+            btnCon[3] = button11;
 
             frHistoric = null;
             frTime = null;
@@ -144,21 +154,43 @@ namespace GameTime
 
         private void UpdateController()
         {
-            Controller con = controller
-                .Where(c => c.IsConnected)
-                .Where(c => c.GetBatteryInformation(BatteryDeviceType.Gamepad).BatteryType == BatteryType.Alkaline).FirstOrDefault();
+            Controller con;
 
-            if (con == null)
+            for (int i=0; i<NO_CONTROLLERS; i++)
+            {
+                btnCon[i].Enabled = controller[i].IsConnected;
+                if(controller[i].IsConnected)
+                {
+                    btnCon[i].Text = string.Format("M{0} - {1}", i + 1, controller[i].GetBatteryInformation(BatteryDeviceType.Gamepad).BatteryType.ToString());
+                }
+                else
+                {
+                    btnCon[i].Text = "N/A";
+                }
+            }
+
+            if(conSeleced == -1)
             {
                 con = controller
                     .Where(c => c.IsConnected)
-                    .Where(c => c.GetBatteryInformation(BatteryDeviceType.Gamepad).BatteryType == BatteryType.Nimh).FirstOrDefault();
-            }
+                    .Where(c => c.GetBatteryInformation(BatteryDeviceType.Gamepad).BatteryType == BatteryType.Alkaline).FirstOrDefault();
 
-            if (con == null)
+                if (con == null)
+                {
+                    con = controller
+                        .Where(c => c.IsConnected)
+                        .Where(c => c.GetBatteryInformation(BatteryDeviceType.Gamepad).BatteryType == BatteryType.Nimh).FirstOrDefault();
+                }
+
+                if (con == null)
+                {
+                    con = controller
+                        .Where(c => c.IsConnected).FirstOrDefault();
+                }
+            }
+            else
             {
-                con = controller
-                    .Where(c => c.IsConnected).FirstOrDefault();
+                con = controller[conSeleced];
             }
 
             if (con != null && con.IsConnected)
@@ -541,6 +573,30 @@ namespace GameTime
             {
                 MessageBox.Show("Dispositivo no encontrado.");
             }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            conSeleced = 0;
+            UpdateController();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            conSeleced = 1;
+            UpdateController();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            conSeleced = 2;
+            UpdateController();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            conSeleced = 3;
+            UpdateController();
         }
     }
 }
