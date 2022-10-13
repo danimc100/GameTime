@@ -10,8 +10,12 @@ using System.Windows.Forms;
 using System.Text.Json;
 using System.IO;
 using SharpDX.XInput;
-using GameTime.Core;
 using AudioSwitcher.AudioApi.CoreAudio;
+using GameTime.Core;
+using GameTime.DBApi;
+using GameTime.DBApi.ExtraEntities;
+using GameTime.DBApi.Repository;
+using GameTime.DBApi.Logic;
 
 namespace GameTime
 {
@@ -32,9 +36,30 @@ namespace GameTime
         private CoreAudioController audio;
         private IEnumerable<CoreAudioDevice> audioDeviceList;
 
+        private TimeRepository timeReposotory;
+        private ReportsRepository reports;
+        private ReportsLogic reportsLogic;
+
         public FrMain()
         {
             InitializeComponent();
+
+            reports = new ReportsRepository();
+            var lst = reports.GeneralReports();
+
+            reportsLogic = new ReportsLogic();
+            var lst2 = reportsLogic.GeneralReports();
+
+            timeReposotory = new TimeRepository();
+            Time t = new Time();
+            t.IdGame = 2;
+
+            //timeReposotory.InsertTime(new Time
+            //{
+            //    IdGame = 2,
+            //    StartTime = DateTime.Now,
+            //    EndTime = DateTime.Now.AddMinutes(20)
+            //});
 
             lastAnyActive = false;
             gameList = new GameList();
@@ -46,7 +71,6 @@ namespace GameTime
             listView1.SetDoubleBuffered(true);
             timer1.Interval = TIMER_INTERVAL;
             UpdateProcess();
-
 
             conSeleced = -1;
             int i = 0;

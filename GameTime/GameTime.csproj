@@ -43,6 +43,12 @@
     <Reference Include="AudioSwitcher.AudioApi.CoreAudio, Version=3.0.0.209, Culture=neutral, PublicKeyToken=fda5729e2db3a64f, processorArchitecture=MSIL">
       <HintPath>..\packages\AudioSwitcher.AudioApi.CoreAudio.3.0.0.1\lib\net40\AudioSwitcher.AudioApi.CoreAudio.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Macross.Json.Extensions, Version=2.0.0.21012, Culture=neutral, PublicKeyToken=7158422f590468ee, processorArchitecture=MSIL">
       <HintPath>..\packages\Macross.Json.Extensions.2.0.0\lib\netstandard2.0\Macross.Json.Extensions.dll</HintPath>
     </Reference>
@@ -59,6 +65,7 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
@@ -78,6 +85,8 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Text.Encodings.Web, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.5.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -109,6 +118,34 @@
     <Compile Include="Core\ProcessInfo.cs" />
     <Compile Include="Core\ProcessItem.cs" />
     <Compile Include="Core\Utils.cs" />
+    <Compile Include="DBApi\ExtraEntities\GLBaseGeneralList.cs" />
+    <Compile Include="DBApi\ExtraEntities\GLGeneralList.cs" />
+    <Compile Include="DBApi\Game.cs">
+      <DependentUpon>GLDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBApi\Logic\ReportsLogic.cs" />
+    <Compile Include="DBApi\Repository\GameRepository.cs" />
+    <Compile Include="DBApi\Repository\GenericRepository.cs" />
+    <Compile Include="DBApi\GLDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GLDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBApi\GLDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GLDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBApi\GLDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GLDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DBApi\Repository\ReportsRepository.cs" />
+    <Compile Include="DBApi\Repository\TimeRepository.cs" />
+    <Compile Include="DBApi\Time.cs">
+      <DependentUpon>GLDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enum\GameListResult.cs" />
     <Compile Include="FrHistoric.cs">
       <SubType>Form</SubType>
@@ -148,6 +185,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EntityDeploy Include="DBApi\GLDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GLDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DBApi\GLDataModel.edmx.diagram">
+      <DependentUpon>GLDataModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -163,7 +207,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DBApi\GLDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GLDataModel.Context.cs</LastGenOutput>
+      <DependentUpon>GLDataModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="DBApi\GLDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GLDataModel.edmx</DependentUpon>
+      <LastGenOutput>GLDataModel.cs</LastGenOutput>
+    </Content>
     <Content Include="GameTime.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
