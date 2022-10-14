@@ -29,7 +29,10 @@ namespace GameTime.DBApi.Logic
                 long ticks = 0;
                 foreach(var time in times)
                 {
-                    ticks += time.EndTime.Ticks - time.StartTime.Ticks;
+                    if(time.StartTime.HasValue)
+                    {
+                        ticks += time.EndTime.Value.Ticks - time.StartTime.Value.Ticks;
+                    }
                 }
 
                 GLGeneralList item = new GLGeneralList();

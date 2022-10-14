@@ -24,7 +24,9 @@
           <Property Name="EndTime" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_Time_Game">
-          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Time" Type="Self.Time" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Game">

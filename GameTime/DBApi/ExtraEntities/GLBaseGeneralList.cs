@@ -11,8 +11,8 @@ namespace GameTime.DBApi.ExtraEntities
         public int IdGame { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
         public bool Historic { get; set; }
     }
 }

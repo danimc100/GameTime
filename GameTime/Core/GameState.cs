@@ -3,35 +3,56 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameTime.DBApi.Logic;
+using GameTime.DBApi.ExtraEntities;
 using System.Text.Json.Serialization;
 
 namespace GameTime.Core
 {
-    public class GameState
+    public class GameState : GLGeneralList
     {
         public GameState()
         {
+            IdGame = 0;
+            Name = string.Empty;
+            Title = string.Empty;
+            PartialTime = new TimeSpan(0);
+            TotalTime = new TimeSpan(0);
+            Active = false;
+            Modified = false;
+            Created = DateTime.Now;
         }
-
         public GameState(string name)
         {
+            IdGame = 0;
             Name = name;
             Title = string.Empty;
             PartialTime = new TimeSpan(0);
             TotalTime = new TimeSpan(0);
             Active = false;
+            Modified = false;
+            Created = DateTime.Now;
+        }
+        public GameState(GLGeneralList generalList)
+        {
+            IdGame = generalList.IdGame;
+            Name = generalList.Name;
+            Title = generalList.Title;
+            PartialTime = new TimeSpan(0);
+            TotalTime = generalList.TotalTime;
+            Active = false;
+            Modified = false;
             Created = DateTime.Now;
         }
 
-        public string Name { get; set; }
-
-        public string Title { get; set; }
-
+        [JsonIgnore]
+        public DateTime StartedProcess { get; set; }
+        
         [JsonIgnore]
         public TimeSpan PartialTime { get; set; }
-
+        
         [JsonIgnore]
-        public TimeSpan TotalTime { get; set; }
+        public override TimeSpan TotalTime { get; set; }
         public long TotalTimeTicks
         {
             get
@@ -43,9 +64,10 @@ namespace GameTime.Core
                 TotalTime = new TimeSpan(value);
             }
         }
-
+        [JsonIgnore]
         public bool Active { get; set; }
-
+        [JsonIgnore]
+        public bool Modified { get; set; }
         public DateTime Created { get; set; }
     }
 }

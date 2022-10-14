@@ -20,5 +20,18 @@ namespace GameTime.DBApi.Repository
             DBContext.Time.Add(time);
             DBContext.SaveChanges();
         }
+
+        public void DeleteAllTime(int idGame)
+        {
+            var lst = (from t in DBContext.Time
+                       where t.IdGame == idGame
+                       select t).ToList();
+
+            lst.ForEach(t =>
+            {
+                DBContext.Time.Remove(t);
+                DBContext.SaveChanges();
+            });
+        }
     }
 }

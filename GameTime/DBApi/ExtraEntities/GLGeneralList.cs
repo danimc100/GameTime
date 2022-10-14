@@ -16,7 +16,7 @@ namespace GameTime.DBApi.ExtraEntities
         public int IdGame { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
-        public TimeSpan TotalTime { get; set; }
+        public virtual TimeSpan TotalTime { get; set; }
         public bool Historic { get; set; }
     }
 }

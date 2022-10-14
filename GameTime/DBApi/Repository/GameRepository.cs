@@ -16,20 +16,28 @@ namespace GameTime.DBApi.Repository
 
         }
 
-        public void Insert(Game game)
+        public Game Get(int idGame)
+        {
+            return DBContext.Game.Where(g => g.IdGame == idGame).FirstOrDefault();
+        }
+
+        public int Insert(Game game)
         {
             DBContext.Game.Add(game);
             DBContext.SaveChanges();
+            return game.IdGame;
         }
 
         public void Edit(Game game)
         {
             DBContext.Game.AddOrUpdate(game);
+            DBContext.SaveChanges();
         }
 
         public void Delete(Game game)
         {
             DBContext.Game.Remove(game);
+            DBContext.SaveChanges();
         }
     }
 }

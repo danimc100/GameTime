@@ -21,7 +21,7 @@ namespace GameTime
 {
     public partial class FrMain : Form
     {
-        private const int TIMER_INTERVAL = 5000;
+        private const int TIMER_INTERVAL = 1000;
         private const string AUDIODEVICECFG_NAME = "AudioDevices.cfg";
         private const int NO_CONTROLLERS = 4;
 
@@ -36,23 +36,23 @@ namespace GameTime
         private CoreAudioController audio;
         private IEnumerable<CoreAudioDevice> audioDeviceList;
 
-        private TimeRepository timeReposotory;
-        private ReportsRepository reports;
-        private ReportsLogic reportsLogic;
+        //private TimeRepository timeReposotory;
+        //private ReportsRepository reports;
+        //private ReportsLogic reportsLogic;
 
         public FrMain()
         {
             InitializeComponent();
 
-            reports = new ReportsRepository();
-            var lst = reports.GeneralReports();
+            //reports = new ReportsRepository();
+            //var lst = reports.GeneralReports();
 
-            reportsLogic = new ReportsLogic();
-            var lst2 = reportsLogic.GeneralReports();
+            //reportsLogic = new ReportsLogic();
+            //var lst2 = reportsLogic.GeneralReports();
 
-            timeReposotory = new TimeRepository();
-            Time t = new Time();
-            t.IdGame = 2;
+            //timeReposotory = new TimeRepository();
+            //Time t = new Time();
+            //t.IdGame = 2;
 
             //timeReposotory.InsertTime(new Time
             //{
@@ -94,31 +94,8 @@ namespace GameTime
             frTime = null;
             timeChanged = false;
 
-            //this.ShowInTaskbar = false;
-
-            //int sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
-            //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            //var list = System.Diagnostics.Process.GetProcesses().Where(p => p.SessionId == sessionId).ToList();
-            //var t = new TimeSpan(7, 30, 0).Ticks;
-
             audio = null;
             audioDeviceList = null;
-            //audio = new CoreAudioController();
-            //CoreAudioDevice dev = audio.GetDefaultDevice(AudioSwitcher.AudioApi.DeviceType.Playback, AudioSwitcher.AudioApi.Role.Multimedia);
-            //label4.Text = dev.FullName;
-
-            //var devices = audio.GetDevices();
-            //var list = new List<AudioDeviceItem>();
-            //list.Add(new AudioDeviceItem { Key = "cascos", Name = "Audífono de los auriculares con micrófono (CORSAIR VOID ELITE USB Gaming Headset)", Id = "2aeffc83-75fb-4581-868b-db51a053aab1" });
-            //list.Add(new AudioDeviceItem { Key = "altavoces", Name = "Altavoces (Steam Streaming Speakers)", Id = "a5a0fb4c-6d0f-4b06-abf9-dbaef3b59b1a" });
-            //File.WriteAllText(AUDIODEVICECFG_NAME, JsonSerializer.Serialize(list));
-
-            //list = JsonSerializer.Deserialize<List<GameTime.Core.AudioDeviceItem>>(File.ReadAllText(AUDIODEVICECFG_NAME));
-
-            //dev.Dispose();
-            //dev = null;
-            //audio.Dispose();
-            //audio = null;
         }
 
         private void AddProcess()
@@ -175,6 +152,8 @@ namespace GameTime
             comboBox1.Items.Clear();
             comboBox1.Items.AddRange(pList.ToArray());
         }
+
+        #region Controller Funcitions
 
         private void UpdateController()
         {
@@ -234,6 +213,8 @@ namespace GameTime
             }
 
         }
+
+        #endregion
 
         private void ShowHistoric()
         {
@@ -318,6 +299,8 @@ namespace GameTime
             SaveWindowState();
         }
 
+        #region Audio Devices Functions
+
         private IEnumerable<CoreAudioDevice> GetAudioDevices()
         {
             if (audio == null)
@@ -355,6 +338,10 @@ namespace GameTime
             }
         }
 
+        #endregion
+
+        #region Events funtions
+
         private void button1_Click(object sender, EventArgs e)
         {
             AddProcess();
@@ -380,8 +367,6 @@ namespace GameTime
             gameList.SaveDate();
         }
 
-        #region Events
-
         private void button2_Click(object sender, EventArgs e)
         {
             UpdateProcess();
@@ -404,6 +389,7 @@ namespace GameTime
                         {
                             item.Title = title;
                             TimeChanged(true);
+                            gameList.UpdateGame(item);
                         }
                     });
                 }
@@ -463,8 +449,6 @@ namespace GameTime
                 TimeChanged(true);
             }
         }
-
-        #endregion
 
         private void button4_Click(object sender, EventArgs e)
         {
@@ -622,5 +606,8 @@ namespace GameTime
             conSeleced = 3;
             UpdateController();
         }
+
+        #endregion
+
     }
 }
