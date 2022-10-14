@@ -8,45 +8,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameTime.Core;
+using GameTime.DBApi;
+using GameTime.DBApi.Logic;
 
 namespace GameTime
 {
     public partial class FrHistoric : Form
     {
-        private GameList _gameList;
-
-        public GameList GameList
-        {
-            get
-            {
-                return _gameList;
-            }
-            set
-            {
-                _gameList = value;
-                UpdateView();
-            }
-        }
-
+        private ReportsLogic reportsLg;
 
         public FrHistoric()
         {
             InitializeComponent();
-            _gameList = null;
+            reportsLg = new ReportsLogic();
         }
 
         private void UpdateView()
         {
-            if(GameList != null)
+            var lst = reportsLg.GeneralReports(true);
+
+            if(lst != null)
             {
                 listView1.Items.Clear();
-                foreach (var game in GameList.Historic)
+                foreach (var game in lst)
                 {
                     var item = listView1.Items.Add(game.Name);
                     item.Name = game.Name;
                     item.SubItems.Add(game.Title);
                     item.SubItems.Add(Utils.TimeFormat(game.TotalTime));
-                    item.SubItems.Add(game.Created.ToShortDateString());
+                    //item.SubItems.Add(game.Created.ToShortDateString());
                 }
             }
         }
@@ -73,7 +63,7 @@ namespace GameTime
                 if (dialogResult == DialogResult.Yes)
                 {
                     listView1.Items.Remove(item);
-                    GameList.DeleteHistoric(name);
+                    //GameList.DeleteHistoric(name);
                 }
                 UpdateView();
             }

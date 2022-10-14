@@ -221,7 +221,6 @@ namespace GameTime
             if (frHistoric == null)
             {
                 frHistoric = new FrHistoric();
-                frHistoric.GameList = gameList;
             }
 
             frHistoric.Show();
