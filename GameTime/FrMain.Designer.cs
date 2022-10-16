@@ -43,8 +43,6 @@ namespace GameTime
             this.editarTítuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.borrarTiemposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cambiarTiempoTotalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.eliminarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -56,6 +54,10 @@ namespace GameTime
             this.button4 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -64,10 +66,7 @@ namespace GameTime
             this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
+            this.verTiemposRegistradosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuListView.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -140,15 +139,14 @@ namespace GameTime
             this.contextMenuListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editarTítuloToolStripMenuItem,
             this.toolStripSeparator2,
+            this.verTiemposRegistradosToolStripMenuItem,
             this.borrarTiemposToolStripMenuItem,
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem,
-            this.cambiarTiempoTotalToolStripMenuItem,
             this.toolStripSeparator3,
             this.eliminarToolStripMenuItem,
             this.toolStripSeparator1,
             this.guardarEnHistóricoToolStripMenuItem});
             this.contextMenuListView.Name = "contextMenuListView";
-            this.contextMenuListView.Size = new System.Drawing.Size(232, 154);
+            this.contextMenuListView.Size = new System.Drawing.Size(198, 154);
             this.contextMenuListView.Text = "Editar título";
             // 
             // editarTítuloToolStripMenuItem
@@ -169,20 +167,6 @@ namespace GameTime
             this.borrarTiemposToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.borrarTiemposToolStripMenuItem.Text = "&Borrar tiempo parcial";
             this.borrarTiemposToolStripMenuItem.Click += new System.EventHandler(this.borrarTiemposToolStripMenuItem_Click);
-            // 
-            // borrarTiempoParcialYBorrarDelTotalToolStripMenuItem
-            // 
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Name = "borrarTiempoParcialYBorrarDelTotalToolStripMenuItem";
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Text = "Borrar parcial y restar del total";
-            this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem.Click += new System.EventHandler(this.borrarTiempoParcialYBorrarDelTotalToolStripMenuItem_Click);
-            // 
-            // cambiarTiempoTotalToolStripMenuItem
-            // 
-            this.cambiarTiempoTotalToolStripMenuItem.Name = "cambiarTiempoTotalToolStripMenuItem";
-            this.cambiarTiempoTotalToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.cambiarTiempoTotalToolStripMenuItem.Text = "&Cambiar tiempo total";
-            this.cambiarTiempoTotalToolStripMenuItem.Click += new System.EventHandler(this.cambiarTiempoTotalToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -283,6 +267,50 @@ namespace GameTime
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Controlador";
             // 
+            // button11
+            // 
+            this.button11.Enabled = false;
+            this.button11.Location = new System.Drawing.Point(545, 43);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(109, 23);
+            this.button11.TabIndex = 6;
+            this.button11.Text = "N/A";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button10
+            // 
+            this.button10.Enabled = false;
+            this.button10.Location = new System.Drawing.Point(430, 43);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(109, 23);
+            this.button10.TabIndex = 5;
+            this.button10.Text = "N/A";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button9
+            // 
+            this.button9.Enabled = false;
+            this.button9.Location = new System.Drawing.Point(545, 14);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(109, 23);
+            this.button9.TabIndex = 4;
+            this.button9.Text = "N/A";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // button8
+            // 
+            this.button8.Enabled = false;
+            this.button8.Location = new System.Drawing.Point(430, 14);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(109, 23);
+            this.button8.TabIndex = 3;
+            this.button8.Text = "N/A";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -355,49 +383,12 @@ namespace GameTime
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // button8
+            // verTiemposRegistradosToolStripMenuItem
             // 
-            this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(430, 14);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(109, 23);
-            this.button8.TabIndex = 3;
-            this.button8.Text = "N/A";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // button9
-            // 
-            this.button9.Enabled = false;
-            this.button9.Location = new System.Drawing.Point(545, 14);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(109, 23);
-            this.button9.TabIndex = 4;
-            this.button9.Text = "N/A";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // button10
-            // 
-            this.button10.Enabled = false;
-            this.button10.Location = new System.Drawing.Point(430, 43);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(109, 23);
-            this.button10.TabIndex = 5;
-            this.button10.Text = "N/A";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // button11
-            // 
-            this.button11.Enabled = false;
-            this.button11.Location = new System.Drawing.Point(545, 43);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(109, 23);
-            this.button11.TabIndex = 6;
-            this.button11.Text = "N/A";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.verTiemposRegistradosToolStripMenuItem.Name = "verTiemposRegistradosToolStripMenuItem";
+            this.verTiemposRegistradosToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.verTiemposRegistradosToolStripMenuItem.Text = "Ver tiempos registrados";
+            this.verTiemposRegistradosToolStripMenuItem.Click += new System.EventHandler(this.verTiemposRegistradosToolStripMenuItem_Click);
             // 
             // FrMain
             // 
@@ -460,11 +451,9 @@ namespace GameTime
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.ToolStripMenuItem cambiarTiempoTotalToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.ToolStripMenuItem borrarTiempoParcialYBorrarDelTotalToolStripMenuItem;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label4;
@@ -473,6 +462,7 @@ namespace GameTime
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.ToolStripMenuItem verTiemposRegistradosToolStripMenuItem;
     }
 }
 

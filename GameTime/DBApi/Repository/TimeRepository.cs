@@ -23,15 +23,21 @@ namespace GameTime.DBApi.Repository
 
         public void DeleteAllTime(int idGame)
         {
-            var lst = (from t in DBContext.Time
-                       where t.IdGame == idGame
-                       select t).ToList();
+            var lst = ListTimes(idGame);
 
             lst.ForEach(t =>
             {
                 DBContext.Time.Remove(t);
                 DBContext.SaveChanges();
             });
+        }
+
+        public List<Time> ListTimes(int idGame)
+        {
+            var lst = (from t in DBContext.Time
+                       where t.IdGame == idGame
+                       select t);
+            return lst.ToList();
         }
     }
 }

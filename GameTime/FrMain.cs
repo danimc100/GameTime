@@ -31,6 +31,7 @@ namespace GameTime
         private GameList gameList;
         private bool lastAnyActive;
         private FrHistoric frHistoric;
+        private FrPartials frPartials;
         private FrTime frTime;
         private bool timeChanged;
         private CoreAudioController audio;
@@ -91,6 +92,7 @@ namespace GameTime
             btnCon[3] = button11;
 
             frHistoric = null;
+            frPartials = null;
             frTime = null;
             timeChanged = false;
 
@@ -454,22 +456,6 @@ namespace GameTime
             ShowHistoric();
         }
 
-        private void cambiarTiempoTotalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (listView1.SelectedItems.Count > 0)
-            {
-                int index = listView1.SelectedItems[0].Index;
-                TimeSpan time = gameList.List[index].TotalTime;
-                TimeSpan? resultTime = ShowFrTime(time);
-                if (resultTime.HasValue)
-                {
-                    gameList.List[index].TotalTime = resultTime.Value;
-                    UpdateView(true);
-                    TimeChanged(true);
-                }
-            }
-        }
-
         private void FrMain_Resize(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Minimized)
@@ -491,22 +477,6 @@ namespace GameTime
         private void FrMain_Load(object sender, EventArgs e)
         {
             SetWindowState();
-        }
-
-        private void borrarTiempoParcialYBorrarDelTotalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (listView1.SelectedItems.Count > 0)
-            {
-                var name = listView1.SelectedItems[0].Name;
-                var gameItem = gameList.Get(name);
-                if (gameItem != null)
-                {
-                    gameItem.TotalTime = gameItem.TotalTime.Subtract(gameItem.PartialTime);
-                    gameItem.PartialTime = new TimeSpan(0);
-                    UpdateView(true);
-                    TimeChanged(true);
-                }
-            }
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -606,7 +576,20 @@ namespace GameTime
             UpdateController();
         }
 
-        #endregion
+        private void verTiemposRegistradosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(frPartials == null)
+            {
+                frPartials = new FrPartials();
+            }
+            
+            string name = listView1.SelectedItems[0].Name;
+            GameState item = gameList.Get(name);
 
+            frPartials.IdGame = item.IdGame;
+            frPartials.Show();
+        }
+
+        #endregion
     }
 }
