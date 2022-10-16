@@ -16,6 +16,7 @@ namespace GameTime
 {
     public partial class FrPartials : Form
     {
+        private int idGame;
         private GameRepository gameRep;
         private TimeRepository timeRep;
         private List<Time> timesLst;
@@ -24,7 +25,8 @@ namespace GameTime
         { 
             set
             {
-                UpdateView(value);
+                idGame = value;
+                UpdateView();
             }
         }
 
@@ -35,7 +37,7 @@ namespace GameTime
             timeRep = new TimeRepository();
         }
 
-        private void UpdateView(int idGame)
+        private void UpdateView()
         {
             Game game = gameRep.Get(idGame);
 
