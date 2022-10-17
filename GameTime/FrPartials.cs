@@ -53,8 +53,10 @@ namespace GameTime
             timesLst.ForEach(t => 
             {
                 TimeSpan elapse = t.EndTime - t.StartTime;
-                ListViewItem item = listView1.Items.Add(Utils.TimeFormat(elapse));
+                ListViewItem item = listView1.Items.Add(t.StartTime.ToString());
                 item.Tag = t.IdTime;
+                item.SubItems.Add(t.EndTime.ToString());
+                item.SubItems.Add(Utils.TimeFormat(elapse));
             });
         }
 
