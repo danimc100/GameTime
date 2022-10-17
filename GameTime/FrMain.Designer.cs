@@ -42,6 +42,7 @@ namespace GameTime
             this.contextMenuListView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editarTítuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.verTiemposRegistradosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borrarTiemposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.eliminarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +51,6 @@ namespace GameTime
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button2 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -66,7 +66,6 @@ namespace GameTime
             this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
-            this.verTiemposRegistradosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuListView.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -146,49 +145,56 @@ namespace GameTime
             this.toolStripSeparator1,
             this.guardarEnHistóricoToolStripMenuItem});
             this.contextMenuListView.Name = "contextMenuListView";
-            this.contextMenuListView.Size = new System.Drawing.Size(198, 154);
+            this.contextMenuListView.Size = new System.Drawing.Size(198, 132);
             this.contextMenuListView.Text = "Editar título";
             // 
             // editarTítuloToolStripMenuItem
             // 
             this.editarTítuloToolStripMenuItem.Name = "editarTítuloToolStripMenuItem";
-            this.editarTítuloToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.editarTítuloToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.editarTítuloToolStripMenuItem.Text = "E&ditar título";
             this.editarTítuloToolStripMenuItem.Click += new System.EventHandler(this.editarTítuloToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(228, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(194, 6);
+            // 
+            // verTiemposRegistradosToolStripMenuItem
+            // 
+            this.verTiemposRegistradosToolStripMenuItem.Name = "verTiemposRegistradosToolStripMenuItem";
+            this.verTiemposRegistradosToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.verTiemposRegistradosToolStripMenuItem.Text = "Ver tiempos registrados";
+            this.verTiemposRegistradosToolStripMenuItem.Click += new System.EventHandler(this.verTiemposRegistradosToolStripMenuItem_Click);
             // 
             // borrarTiemposToolStripMenuItem
             // 
             this.borrarTiemposToolStripMenuItem.Name = "borrarTiemposToolStripMenuItem";
-            this.borrarTiemposToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.borrarTiemposToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.borrarTiemposToolStripMenuItem.Text = "&Borrar tiempo parcial";
             this.borrarTiemposToolStripMenuItem.Click += new System.EventHandler(this.borrarTiemposToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(228, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(194, 6);
             // 
             // eliminarToolStripMenuItem
             // 
             this.eliminarToolStripMenuItem.Name = "eliminarToolStripMenuItem";
-            this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.eliminarToolStripMenuItem.Text = "&Eliminar";
             this.eliminarToolStripMenuItem.Click += new System.EventHandler(this.eliminarToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(228, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(194, 6);
             // 
             // guardarEnHistóricoToolStripMenuItem
             // 
             this.guardarEnHistóricoToolStripMenuItem.Name = "guardarEnHistóricoToolStripMenuItem";
-            this.guardarEnHistóricoToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.guardarEnHistóricoToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.guardarEnHistóricoToolStripMenuItem.Text = "&Guardar en histórico";
             this.guardarEnHistóricoToolStripMenuItem.Click += new System.EventHandler(this.guardarEnHistóricoToolStripMenuItem_Click);
             // 
@@ -221,20 +227,9 @@ namespace GameTime
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.SystemColors.Control;
-            this.button3.Location = new System.Drawing.Point(12, 286);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "&Guardar";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(93, 286);
+            this.button4.Location = new System.Drawing.Point(12, 286);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 7;
@@ -367,7 +362,7 @@ namespace GameTime
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(174, 291);
+            this.label4.Location = new System.Drawing.Point(93, 291);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 12;
@@ -383,13 +378,6 @@ namespace GameTime
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // verTiemposRegistradosToolStripMenuItem
-            // 
-            this.verTiemposRegistradosToolStripMenuItem.Name = "verTiemposRegistradosToolStripMenuItem";
-            this.verTiemposRegistradosToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.verTiemposRegistradosToolStripMenuItem.Text = "Ver tiempos registrados";
-            this.verTiemposRegistradosToolStripMenuItem.Click += new System.EventHandler(this.verTiemposRegistradosToolStripMenuItem_Click);
-            // 
             // FrMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -402,7 +390,6 @@ namespace GameTime
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.listView1);
@@ -414,7 +401,6 @@ namespace GameTime
             this.Text = "GameList";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrMain_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.FrMain_Load);
             this.Resize += new System.EventHandler(this.FrMain_Resize);
             this.contextMenuListView.ResumeLayout(false);
@@ -441,7 +427,6 @@ namespace GameTime
         private System.Windows.Forms.ToolStripMenuItem eliminarToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader columnActive;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ToolStripMenuItem guardarEnHistóricoToolStripMenuItem;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label1;

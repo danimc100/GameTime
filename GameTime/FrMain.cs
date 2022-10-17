@@ -33,34 +33,12 @@ namespace GameTime
         private FrHistoric frHistoric;
         private FrPartials frPartials;
         private FrTime frTime;
-        private bool timeChanged;
         private CoreAudioController audio;
         private IEnumerable<CoreAudioDevice> audioDeviceList;
-
-        //private TimeRepository timeReposotory;
-        //private ReportsRepository reports;
-        //private ReportsLogic reportsLogic;
 
         public FrMain()
         {
             InitializeComponent();
-
-            //reports = new ReportsRepository();
-            //var lst = reports.GeneralReports();
-
-            //reportsLogic = new ReportsLogic();
-            //var lst2 = reportsLogic.GeneralReports();
-
-            //timeReposotory = new TimeRepository();
-            //Time t = new Time();
-            //t.IdGame = 2;
-
-            //timeReposotory.InsertTime(new Time
-            //{
-            //    IdGame = 2,
-            //    StartTime = DateTime.Now,
-            //    EndTime = DateTime.Now.AddMinutes(20)
-            //});
 
             lastAnyActive = false;
             gameList = new GameList();
@@ -85,6 +63,8 @@ namespace GameTime
                 }
             }
 
+            label4.Text = "-";
+
             btnCon = new Button[NO_CONTROLLERS];
             btnCon[0] = button8;
             btnCon[1] = button9;
@@ -94,7 +74,6 @@ namespace GameTime
             frHistoric = null;
             frPartials = null;
             frTime = null;
-            timeChanged = false;
 
             audio = null;
             audioDeviceList = null;
@@ -128,7 +107,6 @@ namespace GameTime
                         items[0].SubItems[2].Text = game.PartialTime.ToString();
                         items[0].SubItems[3].Text = Utils.TimeFormat(game.TotalTime);
                         items[0].SubItems[4].Text = "Si";
-                        TimeChanged(true);
                     }
                     else
                     {
@@ -251,19 +229,6 @@ namespace GameTime
             }
         }
 
-        private void TimeChanged(bool state)
-        {
-            timeChanged = state;
-            if (state)
-            {
-                button3.BackColor = Color.Orange;
-            }
-            else
-            {
-                button3.BackColor = SystemColors.Control;
-            }
-        }
-
         private void SetMinimizedWindow()
         {
             WindowState = FormWindowState.Minimized;
@@ -295,8 +260,6 @@ namespace GameTime
 
         private void SaveGameListAndWindowStatus()
         {
-            gameList.SaveDate();
-            TimeChanged(false);
             SaveWindowState();
         }
 
@@ -363,11 +326,6 @@ namespace GameTime
             lastAnyActive = anyActive;
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            gameList.SaveDate();
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             UpdateProcess();
@@ -389,7 +347,6 @@ namespace GameTime
                         if (item.Name == name)
                         {
                             item.Title = title;
-                            TimeChanged(true);
                             gameList.UpdateGame(item);
                         }
                     });
@@ -410,7 +367,6 @@ namespace GameTime
                 {
                     listView1.Items.Remove(item);
                     gameList.Delete(name);
-                    TimeChanged(true);
                 }
             }
         }
@@ -418,11 +374,6 @@ namespace GameTime
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             this.TopMost = checkBox1.Checked;
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            SaveGameListAndWindowStatus();
         }
 
         private void borrarTiemposToolStripMenuItem_Click(object sender, EventArgs e)
@@ -435,7 +386,6 @@ namespace GameTime
                 {
                     gameItem.PartialTime = new TimeSpan(0);
                     UpdateView(true);
-                    TimeChanged(true);
                 }
             }
         }
@@ -447,7 +397,6 @@ namespace GameTime
                 string name = listView1.SelectedItems[0].Name;
                 gameList.Historify(name);
                 UpdateView(true);
-                TimeChanged(true);
             }
         }
 
