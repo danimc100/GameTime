@@ -36,6 +36,9 @@
   <PropertyGroup>
     <ApplicationIcon>GameTime.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AudioSwitcher.AudioApi, Version=3.0.0.209, Culture=neutral, PublicKeyToken=fda5729e2db3a64f, processorArchitecture=MSIL">
       <HintPath>..\packages\AudioSwitcher.AudioApi.3.0.0\lib\net40\AudioSwitcher.AudioApi.dll</HintPath>
@@ -112,6 +115,7 @@
   <ItemGroup>
     <Compile Include="Core\AudioDeviceItem.cs" />
     <Compile Include="Core\Dialogs.cs" />
+    <Compile Include="Core\FormState.cs" />
     <Compile Include="Core\GameList.cs" />
     <Compile Include="Core\GameState.cs" />
     <Compile Include="Core\ListViewExtension.cs" />
