@@ -124,6 +124,7 @@
     <Compile Include="Core\Utils.cs" />
     <Compile Include="DBApi\ExtraEntities\GLBaseGeneralList.cs" />
     <Compile Include="DBApi\ExtraEntities\GLGeneralList.cs" />
+    <Compile Include="DBApi\ExtraEntities\TimeItemList.cs" />
     <Compile Include="DBApi\Game.cs">
       <DependentUpon>GLDataModel.tt</DependentUpon>
     </Compile>

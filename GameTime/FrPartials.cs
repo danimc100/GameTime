@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameTime.Core;
 using GameTime.DBApi;
+using GameTime.DBApi.ExtraEntities;
 using GameTime.DBApi.Repository;
 
 
@@ -20,11 +21,14 @@ namespace GameTime
         private GameRepository gameRep;
         private TimeRepository timeRep;
         private List<Time> timesLst;
+        private List<TimeItemList> timesList;
         
         public int IdGame 
         { 
             set
             {
+                var aux = GetTimesPerDay(23);
+
                 idGame = value;
                 UpdateView();
             }
@@ -35,6 +39,79 @@ namespace GameTime
             InitializeComponent();
             gameRep = new GameRepository();
             timeRep = new TimeRepository();
+        }
+
+        private void GetTimesIndividually()
+        {
+            var lst = timeRep.ListTimes(idGame);
+            timesList = new List<TimeItemList>();
+
+            lst.ForEach(t =>
+            {
+                timesList.Add(new TimeItemList(t));
+            });
+        }
+
+        private List<TimeItemList> GetTimesPerDay(int idGame)
+        {
+            List<TimeItemList> genList = new List<TimeItemList>();
+            var lst = timeRep.ListTimes(idGame);
+
+            if(lst == null || !lst.Any())
+            {
+                return null;
+            }
+
+            lst.ForEach(t => 
+            { 
+                if(t.StartTime.Day == t.EndTime.Day)
+                {
+                    UpdateTimesList(genList, t.StartTime, t.EndTime);
+                }
+                else
+                {
+                    UpdateTimesList(genList, t.StartTime, GetEndOfDay(t.StartTime));
+                    UpdateTimesList(genList, GetBeginOfDay(t.EndTime), t.EndTime);
+                }
+            });
+
+            return genList;
+        }
+
+        private void UpdateTimesList(List<TimeItemList> genList, DateTime startTime, DateTime endTime)
+        {
+            var item = genList.Where(t => t.StartTime.Year == startTime.Year && t.StartTime.Month == startTime.Month && t.StartTime.Day == startTime.Day)
+                     .FirstOrDefault();
+
+            if (item == null)
+            {
+                item = new TimeItemList(startTime, endTime);
+                genList.Add(item);
+            }
+            else
+            {
+                if (startTime < item.StartTime)
+                {
+                    item.StartTime = startTime;
+                }
+
+                if (endTime > item.EndTime)
+                {
+                    item.EndTime = endTime;
+                }
+
+                item.Total = item.Total.Add(endTime - startTime);
+            }
+        }
+
+        private DateTime GetEndOfDay(DateTime time)
+        {
+            return new DateTime(time.Year, time.Month, time.Day, 23, 59, 59);
+        }
+
+        private DateTime GetBeginOfDay(DateTime time)
+        {
+            return new DateTime(time.Year, time.Month, time.Day, 0, 0, 0);
         }
 
         private void UpdateView()

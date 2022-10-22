@@ -36,6 +36,7 @@ namespace GameTime.DBApi.Repository
         {
             var lst = (from t in DBContext.Time
                        where t.IdGame == idGame
+                       orderby t.StartTime
                        select t);
             return lst.ToList();
         }
