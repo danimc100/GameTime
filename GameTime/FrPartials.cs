@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameTime.Core;
+using GameTime.Core.Extensions;
 using GameTime.DBApi;
 using GameTime.DBApi.ExtraEntities;
 using GameTime.DBApi.Repository;
@@ -20,16 +21,14 @@ namespace GameTime
         private int idGame;
         private GameRepository gameRep;
         private TimeRepository timeRep;
-        private List<Time> timesLst;
         private List<TimeItemList> timesList;
         
         public int IdGame 
         { 
             set
             {
-                var aux = GetTimesPerDay(23);
-
                 idGame = value;
+                timesList = GetTimesPerDay();
                 UpdateView();
             }
         }
@@ -41,18 +40,19 @@ namespace GameTime
             timeRep = new TimeRepository();
         }
 
-        private void GetTimesIndividually()
+        private List<TimeItemList> GetTimesIndividually()
         {
-            var lst = timeRep.ListTimes(idGame);
-            timesList = new List<TimeItemList>();
+            List<TimeItemList> genList = new List<TimeItemList>();
 
+            var lst = timeRep.ListTimes(idGame);
             lst.ForEach(t =>
             {
-                timesList.Add(new TimeItemList(t));
+                genList.Add(new TimeItemList(t));
             });
+            return genList;
         }
 
-        private List<TimeItemList> GetTimesPerDay(int idGame)
+        private List<TimeItemList> GetTimesPerDay()
         {
             List<TimeItemList> genList = new List<TimeItemList>();
             var lst = timeRep.ListTimes(idGame);
@@ -70,8 +70,8 @@ namespace GameTime
                 }
                 else
                 {
-                    UpdateTimesList(genList, t.StartTime, GetEndOfDay(t.StartTime));
-                    UpdateTimesList(genList, GetBeginOfDay(t.EndTime), t.EndTime);
+                    UpdateTimesList(genList, t.StartTime, t.StartTime.GetEndOfDay());
+                    UpdateTimesList(genList, t.EndTime.GetBeginOfDay(), t.EndTime);
                 }
             });
 
@@ -104,16 +104,6 @@ namespace GameTime
             }
         }
 
-        private DateTime GetEndOfDay(DateTime time)
-        {
-            return new DateTime(time.Year, time.Month, time.Day, 23, 59, 59);
-        }
-
-        private DateTime GetBeginOfDay(DateTime time)
-        {
-            return new DateTime(time.Year, time.Month, time.Day, 0, 0, 0);
-        }
-
         private void UpdateView()
         {
             Game game = gameRep.Get(idGame);
@@ -124,16 +114,14 @@ namespace GameTime
             }
 
             label1.Text = string.Format("{0} / {1}", game.Name, game.Title);
-            timesLst = timeRep.ListTimes(idGame);
             listView1.Items.Clear();
 
-            timesLst.ForEach(t => 
+            timesList.ForEach(t =>
             {
-                TimeSpan elapse = t.EndTime - t.StartTime;
                 ListViewItem item = listView1.Items.Add(t.StartTime.ToString());
                 item.Tag = t;
                 item.SubItems.Add(t.EndTime.ToString());
-                item.SubItems.Add(Utils.TimeFormat(elapse));
+                item.SubItems.Add(Utils.TimeFormat(t.Total));
             });
 
             label3.Text = "-";
@@ -145,9 +133,9 @@ namespace GameTime
         {
             TimeSpan total = new TimeSpan();
             
-            timesLst.ForEach(t => 
+            timesList.ForEach(t => 
             {
-                total = total.Add(t.EndTime - t.StartTime);
+                total = total.Add(t.Total);
             });
             return total;
         }
@@ -155,29 +143,21 @@ namespace GameTime
         private TimeSpan TotalToday()
         {
             TimeSpan total = new TimeSpan();
-            DateTime endTime;
 
-            var lst = timesLst.Where(t => IsToday(t.StartTime)).ToList();
+            var lst = timesList.Where(t => t.StartTime.IsToday()).ToList();
             lst.ForEach(t =>
             {
-                if (IsToday(t.EndTime))
+                if (t.EndTime.IsToday())
                 {
-                    endTime = t.EndTime;
+                    total = total.Add(t.Total);
                 }
                 else
                 {
-                    endTime = new DateTime(t.StartTime.Year, t.StartTime.Month, t.StartTime.Day, 23, 59, 59);
+                    DateTime endTime = t.StartTime.GetEndOfDay();
+                    total = total.Add(endTime - t.StartTime);
                 }
-                total = total.Add(endTime - t.StartTime);
             });
             return total;
-        }
-
-        private bool IsToday(DateTime t)
-        {
-            DateTime now = DateTime.Now;
-
-            return t.Year == now.Year && t.Month == now.Month && t.Day == now.Day;
         }
 
         private void FrPartials_FormClosing(object sender, FormClosingEventArgs e)
@@ -198,11 +178,23 @@ namespace GameTime
             System.Console.WriteLine("SelectionChanged");
             foreach(ListViewItem item in listView1.SelectedItems)
             {
-                Time t = (Time)item.Tag;
-                total = total.Add(t.EndTime - t.StartTime);
+                TimeItemList t = (TimeItemList)item.Tag;
+                total = total.Add(t.Total);
             }
 
             label3.Text = Utils.TimeFormat(total);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            timesList = GetTimesPerDay();
+            UpdateView();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            timesList = GetTimesIndividually();
+            UpdateView();
         }
     }
 }
