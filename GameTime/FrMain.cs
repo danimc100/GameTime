@@ -128,7 +128,7 @@ namespace GameTime
 
         private void UpdateProcess()
         {
-            var pList = gameList.GetProcessInfoList(); //gameList.GetProcessList(true);
+            var pList = gameList.GetProcessInfoList();
             comboBox1.Items.Clear();
             comboBox1.Items.AddRange(pList.ToArray());
         }
@@ -537,6 +537,18 @@ namespace GameTime
 
             frPartials.IdGame = item.IdGame;
             frPartials.Show();
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if(gameList.AnyActive)
+            {
+                MessageBox.Show("Hay procesos de la lista activos, no se puede actualizar.", "! Antención !");
+            }
+            else
+            {
+                gameList.LoadData();
+                UpdateView(true);
+            }
         }
 
         #endregion

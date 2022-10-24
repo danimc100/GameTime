@@ -19,7 +19,6 @@ namespace GameTime.Core
         private List<GameState> _list;
         private int sessionId;
         private List<ProcessItem> currentProcessLst;
-        private bool anyActive;
 
         private GameRepository gameRep;
         private TimeRepository timeRep;
@@ -30,7 +29,6 @@ namespace GameTime.Core
             _list = new List<GameState>();
             currentProcessLst = new List<ProcessItem>();
             sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
-            anyActive = false;
 
             gameRep = new GameRepository();
             timeRep = new TimeRepository();
@@ -49,14 +47,13 @@ namespace GameTime.Core
         {
             get
             {
-                return anyActive;
+                return List.Where(g => g.Active).Any();
             }
         }
 
         public void CheckGames(TimeSpan elapsed)
         {
             var pList = GetProcessList();
-            anyActive = false;
 
             foreach (var g in List)
             {
@@ -72,7 +69,6 @@ namespace GameTime.Core
                     g.Modified = true;
                     g.PartialTime = g.PartialTime.Add(elapsed);
                     g.TotalTime = g.TotalTime.Add(elapsed);
-                    anyActive = true;
                 }
                 else
                 {
