@@ -209,7 +209,7 @@ namespace GameTime
             this.Controls.Add(this.button1);
             this.Name = "FrPartials";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "Lista de tiemapos";
+            this.Text = "Lista de tiempos";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrPartials_FormClosing);
             this.ResumeLayout(false);

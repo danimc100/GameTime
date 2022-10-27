@@ -32,12 +32,17 @@ namespace GameTime.DBApi.Repository
             });
         }
 
-        public List<Time> ListTimes(int idGame)
+        public List<Time> ListTimes(int? idGame = null)
         {
-            var lst = (from t in DBContext.Time
-                       where t.IdGame == idGame
-                       orderby t.StartTime
-                       select t);
+            var lst = (from t in DBContext.Time select t);
+
+            if(idGame != null)
+            {
+                lst = lst.Where(t => t.IdGame == idGame.Value);
+            }
+
+            lst = lst.OrderBy(t => t.StartTime);
+
             return lst.ToList();
         }
     }

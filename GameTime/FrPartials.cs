@@ -12,6 +12,7 @@ using GameTime.Core.Extensions;
 using GameTime.DBApi;
 using GameTime.DBApi.ExtraEntities;
 using GameTime.DBApi.Repository;
+using GameTime.DBApi.Logic;
 
 
 namespace GameTime
@@ -21,6 +22,7 @@ namespace GameTime
         private int idGame;
         private GameRepository gameRep;
         private TimeRepository timeRep;
+        private ReportsLogic reportsLogic;
         private List<TimeItemList> timesList;
         
         public int IdGame 
@@ -28,7 +30,7 @@ namespace GameTime
             set
             {
                 idGame = value;
-                timesList = GetTimesPerDay();
+                timesList = reportsLogic.GetTimesPerDay(idGame);
                 UpdateView();
             }
         }
@@ -38,70 +40,7 @@ namespace GameTime
             InitializeComponent();
             gameRep = new GameRepository();
             timeRep = new TimeRepository();
-        }
-
-        private List<TimeItemList> GetTimesIndividually()
-        {
-            List<TimeItemList> genList = new List<TimeItemList>();
-
-            var lst = timeRep.ListTimes(idGame);
-            lst.ForEach(t =>
-            {
-                genList.Add(new TimeItemList(t));
-            });
-            return genList;
-        }
-
-        private List<TimeItemList> GetTimesPerDay()
-        {
-            List<TimeItemList> genList = new List<TimeItemList>();
-            var lst = timeRep.ListTimes(idGame);
-
-            if(lst == null || !lst.Any())
-            {
-                return null;
-            }
-
-            lst.ForEach(t => 
-            { 
-                if(t.StartTime.Day == t.EndTime.Day)
-                {
-                    UpdateTimesList(genList, t.StartTime, t.EndTime);
-                }
-                else
-                {
-                    UpdateTimesList(genList, t.StartTime, t.StartTime.GetEndOfDay());
-                    UpdateTimesList(genList, t.EndTime.GetBeginOfDay(), t.EndTime);
-                }
-            });
-
-            return genList;
-        }
-
-        private void UpdateTimesList(List<TimeItemList> genList, DateTime startTime, DateTime endTime)
-        {
-            var item = genList.Where(t => t.StartTime.Year == startTime.Year && t.StartTime.Month == startTime.Month && t.StartTime.Day == startTime.Day)
-                     .FirstOrDefault();
-
-            if (item == null)
-            {
-                item = new TimeItemList(startTime, endTime);
-                genList.Add(item);
-            }
-            else
-            {
-                if (startTime < item.StartTime)
-                {
-                    item.StartTime = startTime;
-                }
-
-                if (endTime > item.EndTime)
-                {
-                    item.EndTime = endTime;
-                }
-
-                item.Total = item.Total.Add(endTime - startTime);
-            }
+            reportsLogic = new ReportsLogic();
         }
 
         private void UpdateView()
@@ -187,13 +126,13 @@ namespace GameTime
 
         private void button4_Click(object sender, EventArgs e)
         {
-            timesList = GetTimesPerDay();
+            timesList = reportsLogic.GetTimesPerDay(idGame);
             UpdateView();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            timesList = GetTimesIndividually();
+            timesList = reportsLogic.GetTimesIndividually(idGame);
             UpdateView();
         }
     }
