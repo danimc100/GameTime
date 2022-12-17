@@ -165,6 +165,12 @@
     <Compile Include="FrMain.Designer.cs">
       <DependentUpon>FrMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrNotify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrNotify.Designer.cs">
+      <DependentUpon>FrNotify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrPartials.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrMain.resx">
       <DependentUpon>FrMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrNotify.resx">
+      <DependentUpon>FrNotify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrPartials.resx">
       <DependentUpon>FrPartials.cs</DependentUpon>

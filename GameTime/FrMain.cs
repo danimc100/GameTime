@@ -107,10 +107,12 @@ namespace GameTime
                         items[0].SubItems[2].Text = game.PartialTime.ToString();
                         items[0].SubItems[3].Text = Utils.TimeFormat(game.TotalTime);
                         items[0].SubItems[4].Text = "Si";
+                        ShowNotify(game);
                     }
                     else
                     {
                         items[0].SubItems[4].Text = string.Empty;
+                        CloseNotify(game);
                     }
                     listView1.EndUpdate();
                 }
@@ -123,6 +125,27 @@ namespace GameTime
                     item.SubItems.Add(Utils.TimeFormat(game.TotalTime));
                     item.SubItems.Add(string.Empty);
                 }
+            }
+        }
+
+        private void ShowNotify(GameState game)
+        {
+            if(game.NotifyForm == null)
+            {
+                game.NotifyForm = new FrNotify();
+            }
+            game.NotifyForm.Title = $"{game.Title} / {game.Name}";
+            game.NotifyForm.Time = game.PartialTime.ToString();
+            game.NotifyForm.SetLocationAndShow(this);
+        }
+
+        private void CloseNotify(GameState game)
+        {
+            if(game.NotifyForm != null)
+            {
+                game.NotifyForm.Close();
+                game.NotifyForm.Dispose();
+                game.NotifyForm = null;
             }
         }
 

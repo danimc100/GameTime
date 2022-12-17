@@ -21,6 +21,7 @@ namespace GameTime.Core
             Active = false;
             Modified = false;
             Created = DateTime.Now;
+            NotifyForm = null;
         }
         public GameState(string name)
         {
@@ -32,6 +33,7 @@ namespace GameTime.Core
             Active = false;
             Modified = false;
             Created = DateTime.Now;
+            NotifyForm = null;
         }
         public GameState(GLGeneralList generalList)
         {
@@ -43,6 +45,7 @@ namespace GameTime.Core
             Active = false;
             Modified = false;
             Created = DateTime.Now;
+            NotifyForm = null;
         }
 
         [JsonIgnore]
@@ -69,5 +72,6 @@ namespace GameTime.Core
         [JsonIgnore]
         public bool Modified { get; set; }
         public DateTime Created { get; set; }
+        public FrNotify NotifyForm { get; set; }
     }
 }
