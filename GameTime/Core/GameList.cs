@@ -54,6 +54,7 @@ namespace GameTime.Core
         public void CheckGames(TimeSpan elapsed)
         {
             var pList = GetProcessList();
+            int activeNum = 1;
 
             foreach (var g in List)
             {
@@ -69,6 +70,8 @@ namespace GameTime.Core
                     g.Modified = true;
                     g.PartialTime = g.PartialTime.Add(elapsed);
                     g.TotalTime = g.TotalTime.Add(elapsed);
+                    g.ActiveNum = activeNum;
+                    activeNum++;
                 }
                 else
                 {
@@ -91,6 +94,7 @@ namespace GameTime.Core
                         g.Modified = false;
                     }
                     g.Active = false;
+                    g.ActiveNum = 0;
                 }
             }
         }

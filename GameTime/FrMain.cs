@@ -136,7 +136,7 @@ namespace GameTime
             }
             game.NotifyForm.Title = $"{game.Title} / {game.Name}";
             game.NotifyForm.Time = game.PartialTime.ToString();
-            game.NotifyForm.SetLocationAndShow(this);
+            game.NotifyForm.SetLocationAndShow(this, game.ActiveNum);
         }
 
         private void CloseNotify(GameState game)
