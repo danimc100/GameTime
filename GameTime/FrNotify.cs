@@ -52,9 +52,12 @@ namespace GameTime
                     reference.Location.Y - Size.Height);
             }
 
-            Location = position;
-            TopMost= true;
-            Show();
+            if(!Visible)
+            {
+                Show();
+                Location = position;
+                TopMost = true;
+            }
         }
 
         private Screen LocalizeScreen(Form form)
