@@ -57,6 +57,7 @@ namespace GameTime
                 Show();
                 Location = position;
                 TopMost = true;
+                TopLevel = true;
             }
         }
 
