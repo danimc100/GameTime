@@ -54,9 +54,9 @@ namespace GameTime
             conSeleced = -1;
             int i = 0;
             controller = new Controller[NO_CONTROLLERS];
-            foreach(UserIndex index in (UserIndex[]) System.Enum.GetValues(typeof(UserIndex)))
+            foreach (UserIndex index in (UserIndex[])System.Enum.GetValues(typeof(UserIndex)))
             {
-                if(index != UserIndex.Any)
+                if (index != UserIndex.Any)
                 {
                     controller[i] = new Controller(index);
                     i++;
@@ -101,7 +101,11 @@ namespace GameTime
                 var items = listView1.Items.Find(game.Name, false);
                 if (items.Length > 0)
                 {
-                    listView1.BeginUpdate();
+                    //listView1.BeginUpdate(); // Esta línea provoca conflicto con Diablo Immortal (*1)
+                    /*
+                     * (*1) Por alguna razón, esta linea comentada junto con EndUpdate provoca en el juego que se desactive el mando y se active el
+                     * teclado y ratón haciendo que el juego no funcione correctamente.
+                     */
                     if (game.Active)
                     {
                         items[0].SubItems[2].Text = game.PartialTime.ToString();
@@ -114,7 +118,7 @@ namespace GameTime
                         items[0].SubItems[4].Text = string.Empty;
                         CloseNotify(game);
                     }
-                    listView1.EndUpdate();
+                    //listView1.EndUpdate();
                 }
                 else
                 {
