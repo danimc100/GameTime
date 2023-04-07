@@ -153,6 +153,12 @@
       <DependentUpon>GLDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Enum\GameListResult.cs" />
+    <Compile Include="FrEditTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrEditTime.Designer.cs">
+      <DependentUpon>FrEditTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrHistoric.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +191,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrEditTime.resx">
+      <DependentUpon>FrEditTime.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrHistoric.resx">
       <DependentUpon>FrHistoric.cs</DependentUpon>
     </EmbeddedResource>

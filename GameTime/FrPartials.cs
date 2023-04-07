@@ -135,5 +135,25 @@ namespace GameTime
             timesList = reportsLogic.GetTimesIndividually(idGame);
             UpdateView();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            FrEditTime editTime = new FrEditTime();
+            editTime.Inicio = DateTime.Now;
+            editTime.Fin = DateTime.Now;
+
+            DialogResult result = editTime.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                Time time = new Time();
+                time.StartTime = editTime.Inicio;
+                time.EndTime = editTime.Fin;
+                time.IdGame = idGame;
+                timeRep.InsertTime(time);
+                timesList = reportsLogic.GetTimesPerDay(idGame);
+                UpdateView();
+            }
+            editTime.Dispose();
+        }
     }
 }
