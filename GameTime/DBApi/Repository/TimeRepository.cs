@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,17 @@ namespace GameTime.DBApi.Repository
         public void InsertTime(Time time)
         {
             DBContext.Time.Add(time);
+            DBContext.SaveChanges();
+        }
+
+        public Time FindTime(int idTime)
+        {
+            return DBContext.Time.Find(idTime);
+        }
+
+        public void UpdateTime(Time time) 
+        { 
+            DBContext.Entry(time).State = System.Data.Entity.EntityState.Modified;
             DBContext.SaveChanges();
         }
 

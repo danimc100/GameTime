@@ -20,52 +20,52 @@ namespace GameTime
     public partial class FrPartials : Form
     {
         private int idGame;
-        private GameRepository gameRep;
-        private TimeRepository timeRep;
-        private ReportsLogic reportsLogic;
         private List<TimeItemList> timesList;
         
         public int IdGame 
         { 
             set
             {
-                idGame = value;
-                timesList = reportsLogic.GetTimesPerDay(idGame);
-                UpdateView();
+                using(var reportsLogic = new ReportsLogic())
+                {
+                    idGame = value;
+                    timesList = reportsLogic.GetTimesPerDay(idGame);
+                    UpdateView();
+                }
             }
         }
 
         public FrPartials()
         {
             InitializeComponent();
-            gameRep = new GameRepository();
-            timeRep = new TimeRepository();
-            reportsLogic = new ReportsLogic();
         }
 
         private void UpdateView()
         {
-            Game game = gameRep.Get(idGame);
-
-            if(game == null)
+            using (var gameRep = new GameRepository())
             {
-                return;
+                Game game = gameRep.Get(idGame);
+
+                if (game == null)
+                {
+                    return;
+                }
+
+                label1.Text = string.Format("{0} / {1}", game.Name, game.Title);
+                listView1.Items.Clear();
+
+                timesList.ForEach(t =>
+                {
+                    ListViewItem item = listView1.Items.Add(t.StartTime.ToString());
+                    item.Tag = t;
+                    item.SubItems.Add(t.EndTime.ToString());
+                    item.SubItems.Add(Utils.TimeFormat(t.Total));
+                });
+
+                label3.Text = "-";
+                label5.Text = Utils.TimeFormat(TotalToday());
+                label7.Text = Utils.TimeFormat(Total());
             }
-
-            label1.Text = string.Format("{0} / {1}", game.Name, game.Title);
-            listView1.Items.Clear();
-
-            timesList.ForEach(t =>
-            {
-                ListViewItem item = listView1.Items.Add(t.StartTime.ToString());
-                item.Tag = t;
-                item.SubItems.Add(t.EndTime.ToString());
-                item.SubItems.Add(Utils.TimeFormat(t.Total));
-            });
-
-            label3.Text = "-";
-            label5.Text = Utils.TimeFormat(TotalToday());
-            label7.Text = Utils.TimeFormat(Total());
         }
 
         private TimeSpan Total()
@@ -126,14 +126,20 @@ namespace GameTime
 
         private void button4_Click(object sender, EventArgs e)
         {
-            timesList = reportsLogic.GetTimesPerDay(idGame);
-            UpdateView();
+            using(var reportsLogic = new ReportsLogic())
+            {
+                timesList = reportsLogic.GetTimesPerDay(idGame);
+                UpdateView();
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            timesList = reportsLogic.GetTimesIndividually(idGame);
-            UpdateView();
+            using (var reportsLogic = new ReportsLogic())
+            {
+                timesList = reportsLogic.GetTimesIndividually(idGame);
+                UpdateView();
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -145,15 +151,58 @@ namespace GameTime
             DialogResult result = editTime.ShowDialog();
             if(result == DialogResult.OK)
             {
-                Time time = new Time();
-                time.StartTime = editTime.Inicio;
-                time.EndTime = editTime.Fin;
-                time.IdGame = idGame;
-                timeRep.InsertTime(time);
-                timesList = reportsLogic.GetTimesPerDay(idGame);
-                UpdateView();
+                using(var timeRep = new TimeRepository())
+                {
+                    using(var reportsLogic = new ReportsLogic())
+                    {
+                        Time time = new Time();
+                        time.StartTime = editTime.Inicio;
+                        time.EndTime = editTime.Fin;
+                        time.IdGame = idGame;
+                        timeRep.InsertTime(time);
+                        timesList = reportsLogic.GetTimesPerDay(idGame);
+                        UpdateView();
+                    }
+                }
             }
             editTime.Dispose();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(listView1.SelectedItems.Count == 0)
+            {
+                return;
+            }
+
+            Time time = listView1.SelectedItems[0].Tag as Time;
+
+            if(time.IdTime == 0)
+            {
+                MessageBox.Show("No se puede editar cuando la lista de tiempos está agrupada.");
+                return;
+            }   
+
+            FrEditTime editTime = new FrEditTime();
+            editTime.Inicio = time.StartTime;
+            editTime.Fin = time.EndTime;
+            
+            DialogResult result = editTime.ShowDialog();
+            if(result == DialogResult.OK) 
+            {
+                using (var timeRep = new TimeRepository())
+                {
+                    using (var reportsLogic = new ReportsLogic())
+                    {
+                        var timeMod = timeRep.FindTime(time.IdTime);
+                        timeMod.StartTime = editTime.Inicio;
+                        timeMod.EndTime = editTime.Fin;
+                        timeRep.UpdateTime(timeMod);
+                        timesList = reportsLogic.GetTimesPerDay(idGame);
+                        UpdateView();
+                    }
+                }
+            }
         }
     }
 }

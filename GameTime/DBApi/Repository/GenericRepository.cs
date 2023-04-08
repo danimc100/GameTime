@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameTime.DBApi.Repository
 {
-    public class GenericRepository
+    public class GenericRepository : IDisposable
     {
         private GameListEntities dbContext;
 
@@ -21,6 +21,14 @@ namespace GameTime.DBApi.Repository
         public GenericRepository()
         {
             dbContext = new GameListEntities();
+        }
+
+        public void Dispose()
+        {
+            if (dbContext != null)
+            {
+                dbContext.Dispose();
+            }
         }
     }
 }

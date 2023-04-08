@@ -9,7 +9,7 @@ using GameTime.Core.Extensions;
 
 namespace GameTime.DBApi.Logic
 {
-    public class ReportsLogic
+    public class ReportsLogic : IDisposable
     {
         private ReportsRepository reportsRep;
         private TimeRepository timeRep;
@@ -92,6 +92,12 @@ namespace GameTime.DBApi.Logic
             });
 
             return genList;
+        }
+
+        public void Dispose()
+        {
+            reportsRep.Dispose();
+            timeRep.Dispose();
         }
 
         private void UpdateTimesList(List<TimeItemList> genList, DateTime startTime, DateTime endTime)
