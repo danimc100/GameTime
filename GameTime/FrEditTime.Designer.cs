@@ -104,6 +104,7 @@
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FrEditTime";
             this.Text = "FrEditTime";
             this.TopMost = true;
