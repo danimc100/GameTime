@@ -20,19 +20,11 @@ namespace GameTime.Core
         private int sessionId;
         private List<ProcessItem> currentProcessLst;
 
-        private GameRepository gameRep;
-        private TimeRepository timeRep;
-        private ReportsLogic reportsLg;
-
         public GameList()
         {
             _list = new List<GameState>();
             currentProcessLst = new List<ProcessItem>();
             sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
-
-            gameRep = new GameRepository();
-            timeRep = new TimeRepository();
-            reportsLg = new ReportsLogic();
         }
 
         public List<GameState> List
@@ -84,12 +76,15 @@ namespace GameTime.Core
                         }
 
                         // Guardamos registro en la base de datos.
-                        timeRep.InsertTime(new Time 
+                        using(var timeRep = new TimeRepository())
                         {
-                            IdGame = g.IdGame,
-                            StartTime = g.StartedProcess,
-                            EndTime = g.StartedProcess.AddTicks(g.PartialTime.Ticks)
-                        });
+                            timeRep.InsertTime(new Time
+                            {
+                                IdGame = g.IdGame,
+                                StartTime = g.StartedProcess,
+                                EndTime = g.StartedProcess.AddTicks(g.PartialTime.Ticks)
+                            });
+                        }
 
                         g.Modified = false;
                     }
@@ -139,32 +134,41 @@ namespace GameTime.Core
 
         public void UpdateGame(GameState gameState)
         {
-            if(gameState.IdGame == 0)
+            using(var gameRep = new GameRepository())
             {
-                gameState.IdGame = gameRep.Insert(new Game
+                if (gameState.IdGame == 0)
                 {
-                    IdGame = 0,
-                    Name = gameState.Name,
-                    Title = gameState.Title,
-                    Historic = false,
-                });
-            }
-            else
-            {
-                gameRep.Edit(GenGameEntity(gameState));
+                    gameState.IdGame = gameRep.Insert(new Game
+                    {
+                        IdGame = 0,
+                        Name = gameState.Name,
+                        Title = gameState.Title,
+                        Historic = false,
+                    });
+                }
+                else
+                {
+                    gameRep.Edit(GenGameEntity(gameState));
+                }
             }
         }
 
         public void Delete(string name, bool includeDadabase = true)
         {
-            var item = Get(name);
-            if (item != null)
+            using(var gameRep = new GameRepository())
             {
-                List.Remove(item);
-                if(item.IdGame != 0 && includeDadabase)
+                using(var timeRep = new TimeRepository())
                 {
-                    timeRep.DeleteAllTime(item.IdGame);
-                    gameRep.Delete(gameRep.Get(item.IdGame));
+                    var item = Get(name);
+                    if (item != null)
+                    {
+                        List.Remove(item);
+                        if (item.IdGame != 0 && includeDadabase)
+                        {
+                            timeRep.DeleteAllTime(item.IdGame);
+                            gameRep.Delete(gameRep.Get(item.IdGame));
+                        }
+                    }
                 }
             }
         }
@@ -200,12 +204,16 @@ namespace GameTime.Core
         private void LoadDataFromDB()
         {
             _list.Clear();
-            var lst = reportsLg.GeneralReports(false);
 
-            lst.ForEach(g =>
+            using(var reportsLg = new ReportsLogic())
             {
-                _list.Add(new GameState(g));
-            });
+                var lst = reportsLg.GeneralReports(false);
+
+                lst.ForEach(g =>
+                {
+                    _list.Add(new GameState(g));
+                });
+            }
         }
     }
 }
