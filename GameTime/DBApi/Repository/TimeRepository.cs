@@ -48,7 +48,7 @@ namespace GameTime.DBApi.Repository
         {
             var lst = (from t in DBContext.Time select t);
 
-            if(idGame != null)
+            if(idGame != null && idGame != 0)
             {
                 lst = lst.Where(t => t.IdGame == idGame.Value);
             }

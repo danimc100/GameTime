@@ -46,12 +46,15 @@ namespace GameTime
             {
                 Game game = gameRep.Get(idGame);
 
-                if (game == null)
+                if (game != null)
                 {
-                    return;
+                    label1.Text = string.Format("{0} / {1}", game.Name, game.Title);
+                }
+                else
+                {
+                    label1.Text = "Todos";
                 }
 
-                label1.Text = string.Format("{0} / {1}", game.Name, game.Title);
                 listView1.Items.Clear();
 
                 timesList.ForEach(t =>
@@ -144,28 +147,35 @@ namespace GameTime
 
         private void button6_Click(object sender, EventArgs e)
         {
-            FrEditTime editTime = new FrEditTime();
-            editTime.Inicio = DateTime.Now;
-            editTime.Fin = DateTime.Now;
-
-            DialogResult result = editTime.ShowDialog();
-            if(result == DialogResult.OK)
+            if(idGame != 0)
             {
-                using(var timeRep = new TimeRepository())
+                FrEditTime editTime = new FrEditTime();
+                editTime.Inicio = DateTime.Now;
+                editTime.Fin = DateTime.Now;
+
+                DialogResult result = editTime.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    using(var reportsLogic = new ReportsLogic())
+                    using (var timeRep = new TimeRepository())
                     {
-                        Time time = new Time();
-                        time.StartTime = editTime.Inicio;
-                        time.EndTime = editTime.Fin;
-                        time.IdGame = idGame;
-                        timeRep.InsertTime(time);
-                        timesList = reportsLogic.GetTimesPerDay(idGame);
-                        UpdateView();
+                        using (var reportsLogic = new ReportsLogic())
+                        {
+                            Time time = new Time();
+                            time.StartTime = editTime.Inicio;
+                            time.EndTime = editTime.Fin;
+                            time.IdGame = idGame;
+                            timeRep.InsertTime(time);
+                            timesList = reportsLogic.GetTimesPerDay(idGame);
+                            UpdateView();
+                        }
                     }
                 }
+                editTime.Dispose();
             }
-            editTime.Dispose();
+            else
+            {
+                MessageBox.Show("No hay un nuego seleccionado.");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
