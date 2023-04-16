@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +42,14 @@ namespace GameTime.Core
             //    t.Hours,
             //    t.Minutes,
             //    t.Seconds);
+        }
+
+        public static void NotificacionSistemaShow(string titulo, string mensaje)
+        {
+            new ToastContentBuilder()
+                .AddText(titulo)
+                .AddText(mensaje)
+                .Show();
         }
     }
 }

@@ -11,6 +11,7 @@ using GameTime.Enum;
 using GameTime.DBApi;
 using GameTime.DBApi.Repository;
 using GameTime.DBApi.Logic;
+using GameTime.Core;
 
 namespace GameTime.Core
 {
@@ -56,6 +57,7 @@ namespace GameTime.Core
                     {
                         g.StartedProcess = DateTime.Now;
                         g.PartialTime = new TimeSpan();
+                        Utils.NotificacionSistemaShow("Arranca proceso", $"{g.Name}/{g.Title}");
                     }
 
                     g.Active = true;
