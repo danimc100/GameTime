@@ -54,10 +54,10 @@ namespace GameTime
 
             if(!Visible)
             {
-                Show();
-                Location = position;
                 TopMost = true;
                 TopLevel = true;
+                Show();
+                Location = position;
             }
         }
 
