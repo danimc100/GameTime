@@ -20,12 +20,14 @@ namespace GameTime.Core
         private List<GameState> _list;
         private int sessionId;
         private List<ProcessItem> currentProcessLst;
+        private List<string> forceProcessInclude;
 
         public GameList()
         {
             _list = new List<GameState>();
             currentProcessLst = new List<ProcessItem>();
             sessionId = System.Diagnostics.Process.GetCurrentProcess().SessionId;
+            forceProcessInclude = new List<string> { "QuantumBreak" };
         }
 
         public List<GameState> List
@@ -100,7 +102,7 @@ namespace GameTime.Core
         {
             return System.Diagnostics.Process.GetProcesses()
                 .Where(p => p.SessionId == sessionId)
-                .Where(p => p.MainWindowHandle != IntPtr.Zero && p.ProcessName != "explorer")
+                .Where(p => p.MainWindowHandle != IntPtr.Zero && p.ProcessName != "explorer" || forceProcessInclude.Contains(p.ProcessName))
                 .Select(f => new ProcessInfo { ProcessName = f.ProcessName, ProcessTitle = f.MainWindowTitle })
                 .OrderBy(f => f.ProcessName)
                 .Distinct()
@@ -185,7 +187,7 @@ namespace GameTime.Core
         {
             return System.Diagnostics.Process.GetProcesses()
                 .Where(p => p.SessionId == sessionId)
-                .Where(p => p.MainWindowHandle != IntPtr.Zero && p.ProcessName != "explorer")
+                .Where(p => p.MainWindowHandle != IntPtr.Zero && p.ProcessName != "explorer" || forceProcessInclude.Contains(p.ProcessName))
                 .Select(f => f.ProcessName)
                 .OrderBy(f => f)
                 .Distinct()
