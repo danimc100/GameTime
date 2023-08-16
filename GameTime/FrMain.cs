@@ -111,12 +111,13 @@ namespace GameTime
                     {
                         items[0].SubItems[2].Text = game.PartialTime.ToString();
                         items[0].SubItems[3].Text = Utils.TimeFormat(game.TotalTime);
-                        items[0].SubItems[4].Text = "Si";
+                        items[0].SubItems[4].Text = Utils.TimeFormat(game.TotalTimeToday);
+                        items[0].SubItems[5].Text = "Si";
                         ShowNotify(game);
                     }
                     else
                     {
-                        items[0].SubItems[4].Text = string.Empty;
+                        items[0].SubItems[5].Text = string.Empty;
                         CloseNotify(game);
                     }
                     //listView1.EndUpdate();
@@ -128,6 +129,7 @@ namespace GameTime
                     item.SubItems.Add(game.Title);
                     item.SubItems.Add(game.PartialTime.ToString());
                     item.SubItems.Add(Utils.TimeFormat(game.TotalTime));
+                    item.SubItems.Add(Utils.TimeFormat(game.TotalTimeToday));
                     item.SubItems.Add(string.Empty);
                 }
             }

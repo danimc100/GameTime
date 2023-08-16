@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
+using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,18 +31,13 @@ namespace GameTime.Core
                 }
             }
 
-            return string.Format(
+            string result = string.Format(
                 format,
                 (t.Days * 24) + t.Hours,
                 t.Minutes,
                 t.Seconds);
-
-            //return string.Format(
-            //    "Días {0} - {1:D2}:{2:D2}:{3:D2}",
-            //    t.Days,
-            //    t.Hours,
-            //    t.Minutes,
-            //    t.Seconds);
+            
+            return result;
         }
 
         public static void NotificacionSistemaShow(string titulo, string mensaje)

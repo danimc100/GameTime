@@ -12,6 +12,7 @@ using GameTime.DBApi;
 using GameTime.DBApi.Repository;
 using GameTime.DBApi.Logic;
 using GameTime.Core;
+using GameTime.Core.Extensions;
 
 namespace GameTime.Core
 {
@@ -66,6 +67,7 @@ namespace GameTime.Core
                     g.Modified = true;
                     g.PartialTime = g.PartialTime.Add(elapsed);
                     g.TotalTime = g.TotalTime.Add(elapsed);
+                    g.TotalTimeToday = g.TotalTimeToday.Add(elapsed);   
                     g.ActiveNum = activeNum;
                     activeNum++;
                 }
@@ -79,16 +81,18 @@ namespace GameTime.Core
                             UpdateGame(g);
                         }
 
+
                         // Guardamos registro en la base de datos.
-                        using(var timeRep = new TimeRepository())
-                        {
-                            timeRep.InsertTime(new Time
-                            {
-                                IdGame = g.IdGame,
-                                StartTime = g.StartedProcess,
-                                EndTime = g.StartedProcess.AddTicks(g.PartialTime.Ticks)
-                            });
-                        }
+                        InsertTime(g);
+                        //using (var timeRep = new TimeRepository())
+                        //{
+                        //    timeRep.InsertTime(new Time
+                        //    {
+                        //        IdGame = g.IdGame,
+                        //        StartTime = g.StartedProcess,
+                        //        EndTime = g.StartedProcess.AddTicks(g.PartialTime.Ticks)
+                        //    });
+                        //}
 
                         g.Modified = false;
                     }
@@ -181,6 +185,44 @@ namespace GameTime.Core
         {
             LoadDataFromDB();
             return GameListResult.Ok;
+        }
+
+        private void InsertTime(GameState g)
+        {
+            using (var timeRep = new TimeRepository())
+            {
+                DateTime startTime = g.StartedProcess;
+                DateTime endTime = g.StartedProcess.AddTicks(g.PartialTime.Ticks);
+
+                if(startTime.Day != endTime.Day)
+                {
+                    DateTime endTimeA = startTime.GetEndOfDay();
+                    DateTime startTimeA = endTime.GetBeginOfDay();
+
+                    timeRep.InsertTime(new Time 
+                    { 
+                        IdGame = g.IdGame,
+                        StartTime = startTime,
+                        EndTime = endTimeA
+                    });
+                    
+                    timeRep.InsertTime(new Time 
+                    { 
+                        IdGame = g.IdGame,
+                        StartTime = startTimeA,
+                        EndTime = endTime
+                    });
+                }
+                else
+                {
+                    timeRep.InsertTime(new Time
+                    {
+                        IdGame = g.IdGame,
+                        StartTime = g.StartedProcess,
+                        EndTime = g.StartedProcess.AddTicks(g.PartialTime.Ticks)
+                    });
+                }
+            }
         }
 
         private List<string> GetProcessList()

@@ -38,11 +38,26 @@ namespace GameTime.DBApi.Logic
                     }
                 }
 
+                var timesToday = baseLst.Where(f => 
+                    f.IdGame == idGame && 
+                    f.StartTime.Value.Year == DateTime.Now.Year &&
+                    f.StartTime.Value.Month == DateTime.Now.Month &&
+                    f.StartTime.Value.Day == DateTime.Now.Day).ToList();
+                long ticksHoy = 0;
+                foreach (var time in timesToday)
+                {
+                    if(time.StartTime.HasValue) 
+                    {
+                        ticksHoy += time.EndTime.Value.Ticks - time.StartTime.Value.Ticks;
+                    }
+                }
+
                 GLGeneralList item = new GLGeneralList();
                 item.IdGame = times.First().IdGame;
                 item.Name = times.First().Name;
                 item.Title = times.First().Title;
                 item.TotalTime = new TimeSpan(ticks);
+                item.TotalTimeToday = new TimeSpan(ticksHoy);   
                 lst.Add(item);
             });
 

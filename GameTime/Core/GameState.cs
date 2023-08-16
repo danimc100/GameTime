@@ -18,6 +18,7 @@ namespace GameTime.Core
             Title = string.Empty;
             PartialTime = new TimeSpan(0);
             TotalTime = new TimeSpan(0);
+            TotalTimeToday = new TimeSpan(0);   
             Active = false;
             Modified = false;
             Created = DateTime.Now;
@@ -31,6 +32,7 @@ namespace GameTime.Core
             Title = string.Empty;
             PartialTime = new TimeSpan(0);
             TotalTime = new TimeSpan(0);
+            TotalTimeToday = new TimeSpan(0);
             Active = false;
             Modified = false;
             Created = DateTime.Now;
@@ -44,6 +46,7 @@ namespace GameTime.Core
             Title = generalList.Title;
             PartialTime = new TimeSpan(0);
             TotalTime = generalList.TotalTime;
+            TotalTimeToday = generalList.TotalTimeToday;
             Active = false;
             Modified = false;
             Created = DateTime.Now;
