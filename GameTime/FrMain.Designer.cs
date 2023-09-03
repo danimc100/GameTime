@@ -38,6 +38,7 @@ namespace GameTime
             this.columnTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnPartialTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnTotalTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnTotalToday = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnActive = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuListView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editarTítuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,6 @@ namespace GameTime
             this.label4 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.columnTotalToday = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuListView.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -96,8 +96,8 @@ namespace GameTime
             this.columnName,
             this.columnTitle,
             this.columnPartialTime,
-            this.columnTotalTime,
             this.columnTotalToday,
+            this.columnTotalTime,
             this.columnActive});
             this.listView1.ContextMenuStrip = this.contextMenuListView;
             this.listView1.FullRowSelect = true;
@@ -111,6 +111,7 @@ namespace GameTime
             this.listView1.TabIndex = 3;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // columnName
             // 
@@ -131,6 +132,11 @@ namespace GameTime
             // 
             this.columnTotalTime.Text = "Tiempo total";
             this.columnTotalTime.Width = 120;
+            // 
+            // columnTotalToday
+            // 
+            this.columnTotalToday.Text = "T. Total Hoy";
+            this.columnTotalToday.Width = 119;
             // 
             // columnActive
             // 
@@ -390,11 +396,6 @@ namespace GameTime
             this.button3.Text = "A&ctualizar lista";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // columnTotalToday
-            // 
-            this.columnTotalToday.Text = "T. Total Hoy";
-            this.columnTotalToday.Width = 119;
             // 
             // FrMain
             // 
