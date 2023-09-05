@@ -21,6 +21,7 @@ namespace GameTime
     {
         private int idGame;
         private List<TimeItemList> timesList;
+        private FormSaveState formSaveState;
         
         public int IdGame 
         { 
@@ -38,6 +39,7 @@ namespace GameTime
         public FrPartials()
         {
             InitializeComponent();
+            formSaveState = new FormSaveState(this);
         }
 
         private void UpdateView()
@@ -104,13 +106,13 @@ namespace GameTime
 
         private void FrPartials_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            Hide();
+            //e.Cancel = true;
+            //Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Hide();
+            Close();
         }
 
         private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

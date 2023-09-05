@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,24 @@ namespace GameTime.Core
 {
     public class FormState
     {
-        private Form _form;
+        public Point Location { get; set; }
 
-        public FormState(Form form)
+        public FormState()
+        { }
+        
+        public FormState(Form form) 
         {
-            _form = form;
+            GetState(form);
+        }  
+
+        public void SetState(Form form)
+        {
+            form.Location = Location;
+        }
+
+        public void GetState(Form form)
+        {
+            Location = form.Location;   
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameTime.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,12 +13,15 @@ namespace GameTime
 {
     public partial class FrEditTime : Form
     {
+        private FormSaveState formSaveState;
+
         public DateTime Inicio { get { return dateTimePicker1.Value; } set { dateTimePicker1.Value = value; } }
         public DateTime Fin { get { return dateTimePicker2.Value; } set { dateTimePicker2.Value = value; } }
 
         public FrEditTime()
         {
             InitializeComponent();
+            formSaveState = new FormSaveState(this);
         }
 
         private void button1_Click(object sender, EventArgs e)

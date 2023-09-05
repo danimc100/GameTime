@@ -26,6 +26,7 @@ namespace GameTime
         private const string AUDIODEVICECFG_NAME = "AudioDevices.cfg";
         private const int NO_CONTROLLERS = 4;
 
+        private FormSaveState formSaveState;
         private Controller[] controller;
         private int conSeleced;
         private Button[] btnCon;
@@ -40,6 +41,8 @@ namespace GameTime
         public FrMain()
         {
             InitializeComponent();
+
+            formSaveState = new FormSaveState(this);
 
             lastAnyActive = false;
             gameList = new GameList();
@@ -229,11 +232,7 @@ namespace GameTime
 
         private void ShowHistoric()
         {
-            if (frHistoric == null)
-            {
-                frHistoric = new FrHistoric();
-            }
-
+            frHistoric = new FrHistoric();
             frHistoric.Show();
         }
 
@@ -274,24 +273,9 @@ namespace GameTime
             ShowInTaskbar = true;
         }
 
-        private void SaveWindowState()
-        {
-            if (WindowState == FormWindowState.Normal)
-            {
-                Properties.Settings.Default.Location = Location;
-                Properties.Settings.Default.Save();
-            }
-        }
-
         private void SetWindowState()
         {
             SetNormalWindow();
-            Location = Properties.Settings.Default.Location;
-        }
-
-        private void SaveGameListAndWindowStatus()
-        {
-            SaveWindowState();
         }
 
         #region Audio Devices Functions
@@ -350,10 +334,6 @@ namespace GameTime
             UpdateView();
             UpdateController();
 
-            if (anyActive != lastAnyActive && !anyActive)
-            {
-                SaveGameListAndWindowStatus();
-            }
             lastAnyActive = anyActive;
         }
 
@@ -451,7 +431,6 @@ namespace GameTime
 
         private void FrMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveWindowState();
         }
 
         private void FrMain_Load(object sender, EventArgs e)
@@ -558,7 +537,7 @@ namespace GameTime
 
         private void verTiemposRegistradosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(frPartials == null)
+            //if(frPartials == null)
             {
                 frPartials = new FrPartials();
             }

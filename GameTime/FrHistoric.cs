@@ -16,11 +16,13 @@ namespace GameTime
     public partial class FrHistoric : Form
     {
         private ReportsLogic reportsLg;
+        private FormSaveState formSaveState;
 
         public FrHistoric()
         {
             InitializeComponent();
             reportsLg = new ReportsLogic();
+            formSaveState = new FormSaveState(this);
         }
 
         private void UpdateView()
@@ -43,7 +45,7 @@ namespace GameTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Close();
         }
 
         private void FrHistoric_Activated(object sender, EventArgs e)
