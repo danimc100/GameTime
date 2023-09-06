@@ -20,8 +20,9 @@ namespace GameTime.Core
         {
             get
             {
-                string aux = $"form_{_form.Name}_state.json";
-                return aux;
+                string path = Path.GetDirectoryName(Application.ExecutablePath);
+                string fileName = Path.Combine(path, $"form_{_form.Name}_state.json");
+                return fileName;
             }
         }
 
