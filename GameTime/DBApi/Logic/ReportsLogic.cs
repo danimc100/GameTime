@@ -40,6 +40,7 @@ namespace GameTime.DBApi.Logic
 
                 var timesToday = baseLst.Where(f => 
                     f.IdGame == idGame && 
+                    f.StartTime.HasValue && 
                     f.StartTime.Value.Year == DateTime.Now.Year &&
                     f.StartTime.Value.Month == DateTime.Now.Month &&
                     f.StartTime.Value.Day == DateTime.Now.Day).ToList();
